@@ -1,0 +1,19 @@
+ DROP TABLE public.auth_group CASCADE;
+ DROP TABLE public.auth_group_permissions CASCADE;
+ DROP TABLE public.auth_permission CASCADE;
+ DROP TABLE public.auth_user CASCADE;
+ DROP TABLE public.auth_user_groups CASCADE;
+ DROP TABLE public.auth_user_user_permissions CASCADE;
+ DROP TABLE public.django_admin_log CASCADE;
+ DROP TABLE public.django_content_type CASCADE;
+ DROP TABLE public.django_session CASCADE;
+ DROP TABLE public.django_site CASCADE;
+ DROP TABLE public.home_institucion CASCADE;
+ DROP TABLE public.home_institucion_nombre CASCADE;
+ DROP TABLE public.home_jugador CASCADE;
+ DROP TABLE public.home_pregunta CASCADE;
+ DROP TABLE public.home_respuesta_booleana CASCADE;
+ DROP TABLE public.home_respuesta_multiple CASCADE;
+ DROP TABLE public.home_respuesta_secuencial CASCADE;
+ DROP TABLE public.home_respuesta_unica CASCADE;
+

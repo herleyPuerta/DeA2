@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block titulo %}
+Perfil de usuario
+{% endblock titulo %}
+{% block contenido %}
+<form method="POST" action=".">
+	{% csrf_token %}
+	tipo de pregunta
+	<select name="categoria">
+		<option value="unica_respuesta">Multiples Opciones, única respuesta</option>
+		<option value="multiple_repuesta">Multiples Opciones, múltiples respuestas</option>
+		<option value="booleana">verdadero ó falso</option>
+		<option value="secuencial">Secuencial</option>
+	</select>
+	categoria de la pregunta 
+	<input type="submit" value="Teoria">
+</form>
+{% endblock contenido %}
