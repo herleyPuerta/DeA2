@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block titulo %}
+Agregar Pregunta Con Respuesta Única
+{% endblock titulo %}
+{% block contenido %}
+<form method="POST" action=".">
+	{% csrf_token %}
+	Seleccione el Grado de la pregunta:
+	<select name="grado" value="grado">
+		<option value="1">Primaria</option>
+		<option value="2">Sexto y Séptimo</option>
+		<option value="3">Octavo y Noveno</option>
+	</select>
+	Ingrese la pregunta:
+	<input name="pregunta" type="text">
+	<input type="submit" value="Ingresar Respuestas">
+</form>
+{% endblock contenido %}

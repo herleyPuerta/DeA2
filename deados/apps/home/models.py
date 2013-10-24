@@ -15,7 +15,6 @@ class Institucion(models.Model):
 		return self.user.username
 
 class Jugador(models.Model):
-	idJugador			= models.AutoField(primary_key=True,blank=False,null=False)
 	nombre				= models.CharField(max_length=90)
 	idInstitucion		= models.ForeignKey(Institucion)
 	puntos_totales		= models.IntegerField()
@@ -30,7 +29,6 @@ class Pregunta(models.Model):
 	OPCIONES_GRADO		= ((1,'primaria'),(2,'sexto_septimo'),(3,'octavo_noveno'))
 	OPCIONES_CATEGORIA	= ((1,'teoria'),(2,'agilidad_mental'))
 	OPCIONES_RESPUESTA	= ((1,'unica_respuesta'),(2,'multiple_repuesta'),(3,'booleana'),(4,'secuencial'))
-	idPregunta			= models.AutoField(primary_key=True,blank=False,null=False)
 	idInstitucion		= models.ForeignKey(Institucion)
 	contenido			= models.CharField(max_length=61)
 	grado				= models.IntegerField(choices=OPCIONES_GRADO, default=1)
@@ -41,16 +39,16 @@ class Pregunta(models.Model):
 		return self.contenido
 
 class Respuesta(models.Model):
-	idRespuesta		= models.AutoField(primary_key=True,blank=False,null=False)
 	idPregunta		= models.ForeignKey(Pregunta)
 	contenido		= models.CharField(max_length=41)
 
 	class Meta:
 		abstract = True
 
-class Respuesta_Unica(Respuesta):
-	determinacion		= models.BooleanField(default=False)
-
+class Respuesta_Unica(models.Model):
+	idPregunta		= models.ForeignKey(Pregunta)
+	contenido		= models.CharField(max_length=41)
+	determinacion	= models.BooleanField(default=False)
 	def __unicode__(self):
 		return self.contenido
 
