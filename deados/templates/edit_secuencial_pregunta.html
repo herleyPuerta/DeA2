@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}
+Editar Pregunta Teorica
+{% endblock title %}
+{% block contenido %}
+
+<form action="/edit_pregunta_secuencial/" method="POST">
+	{% csrf_token %}
+	<input type="hidden" name="id" value="{{pregunta.id}}" required>
+	Editar el contenido:
+	<br>
+	<input type="text" name="contenido" value="{{pregunta.contenido}}" required>
+	<br>
+	el grado actual es:
+	<br>
+	{{grados}}
+	<br>
+	Seleccione el nuevo grado:
+	<br>
+	<select name="grado">
+		<option value="1" selected>Primaria</option>
+		<option value="2">Sexto y Séptimo</option>
+		<option value="3">Octavo y noveno</option>
+	</select>
+	<br><br>
+	<input type="submit" value="editar respuestas">
+
+</form>
+{% endblock contenido %}

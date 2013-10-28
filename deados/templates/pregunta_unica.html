@@ -5,14 +5,32 @@ Agregar Pregunta Con Respuesta Única
 {% block contenido %}
 <form method="POST" action=".">
 	{% csrf_token %}
-	Seleccione el Grado de la pregunta:
+	Seleccione el Grado de la pregunta: <br>
 	<select name="grado" value="grado">
 		<option value="1">Primaria</option>
 		<option value="2">Sexto y Séptimo</option>
 		<option value="3">Octavo y Noveno</option>
 	</select>
+	<br>
 	Ingrese la pregunta:
-	<input name="pregunta" type="text">
-	<input type="submit" value="Ingresar Respuestas">
+	<br>
+	<input name="pregunta" type="text" required   /> <br>
+
+	<p>respuesta1:</p>
+	<input type="text" name="respuesta1" required />
+	<p>respuesta2:</p>
+	<input type="text" name="respuesta2" required />
+	<p>respuesta3:</p>
+	<input type="text" name="respuesta3" required />
+	<p>respuesta4:</p>
+	<input type="text" name="respuesta4" required />
+	<br>
+	Elige la Respuesta Correcta:
+	<input type="radio" name="unica" value="1">
+	<input type="radio" name="unica" value="2">
+	<input type="radio" name="unica" value="3">
+	<input type="radio" name="unica" value="4">
+	<br>
+	<input type="submit" value="Guardar">
 </form>
 {% endblock contenido %}

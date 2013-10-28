@@ -3,6 +3,8 @@
 Perfil de usuario
 {% endblock titulo %}
 {% block contenido %}
-<a href="{% url 'vistaAddPreguntaTeoria' %}">Ingresar pregunta de teoria</a><br>
-<a href="{% url 'visraAddPreguntaAgilidad'}">Ingresar pregunta de agilidad</a>
+<h3>Bienvenido usuario del colegio {{user.username}}!</h3><br><br>
+<p>Tu último inicio de sesión fue el {{user.last_login}}</br><br><br>
+<a class="btn btn-primary" href="{% url 'vistaAddPreguntaTeoria' %}">Ingresar pregunta de teoria</a><br><br><br>
+<a class="btn btn-primary" href="{% url 'visraAddPreguntaAgilidad'}">Ingresar pregunta de agilidad</a>
 {% endblock contenido %}

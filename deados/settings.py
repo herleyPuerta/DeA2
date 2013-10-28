@@ -3,6 +3,7 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+AUTH_PROFILE_MODULE = 'home.Institucion'
 ADMINS = (
     ('Herley Puerta', 'hypuerta@gmail.com'),
 )
@@ -79,6 +80,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'deados.apps.home',
+    'deados.apps.webServices.wsPreguntas',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

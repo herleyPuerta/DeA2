@@ -15,12 +15,12 @@ class Institucion(models.Model):
 		return self.user.username
 
 class Jugador(models.Model):
-	nombre				= models.CharField(max_length=90)
-	idInstitucion		= models.ForeignKey(Institucion)
-	puntos_totales		= models.IntegerField()
-	puntos_negativos	= models.IntegerField()
-	puntos_positivos	= models.IntegerField()
-	fechaRegistro 		= models.DateField(auto_now_add=True)
+	nombre			 = models.CharField(max_length=90)
+	idInstitucion	 = models.ForeignKey(Institucion)
+	puntos_totales	 = models.IntegerField()
+	puntos_negativos = models.IntegerField()
+	puntos_positivos = models.IntegerField()
+	fechaRegistro 	 = models.DateField(auto_now_add=True)
 
 	def __unicode__(self):
 		return self.nombre
@@ -31,7 +31,7 @@ class Pregunta(models.Model):
 	OPCIONES_RESPUESTA	= ((1,'unica_respuesta'),(2,'multiple_repuesta'),(3,'booleana'),(4,'secuencial'))
 	idInstitucion		= models.ForeignKey(Institucion)
 	contenido			= models.CharField(max_length=61)
-	grado				= models.IntegerField(choices=OPCIONES_GRADO, default=1)
+	grado    			= models.IntegerField(choices=OPCIONES_GRADO, default=1)
 	categoria			= models.IntegerField(choices=OPCIONES_CATEGORIA,default=1)
 	tipoRespuesta		= models.IntegerField(choices=OPCIONES_RESPUESTA,default=1)
 
@@ -39,33 +39,33 @@ class Pregunta(models.Model):
 		return self.contenido
 
 class Respuesta(models.Model):
-	idPregunta		= models.ForeignKey(Pregunta)
-	contenido		= models.CharField(max_length=41)
+	idPregunta	 = models.ForeignKey(Pregunta)
+	contenido	 = models.CharField(max_length=41)
+	no_secuencia = models.IntegerField()
 
 	class Meta:
 		abstract = True
 
-class Respuesta_Unica(models.Model):
-	idPregunta		= models.ForeignKey(Pregunta)
-	contenido		= models.CharField(max_length=41)
-	determinacion	= models.BooleanField(default=False)
+class Respuesta_Unica(Respuesta):
+	determinacion = models.BooleanField(default=False)
 	def __unicode__(self):
 		return self.contenido
 
 class Respuesta_Multiple(Respuesta):
-	determinacion			= models.BooleanField(default=False)
-
+	determinacion = models.BooleanField(default=False)
 	def __unicode__(self):
 		return self.contenido
 
 class Respuesta_Secuencial(Respuesta):
-	secuencia 				= models.IntegerField()
+	secuencia = models.IntegerField()
 
 	def __unicode__(self):
 		return self.contenido
 
-class Respuesta_Booleana(Respuesta):
-	determinacion			= models.BooleanField(default=False)
+class Respuesta_Booleana(models.Model):
+	idPregunta	  = models.ForeignKey(Pregunta)
+	contenido 	  = models.CharField(max_length=41)
+	determinacion = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.contenido

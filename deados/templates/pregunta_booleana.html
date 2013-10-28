@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block titulo %}
+Agregar Pregunta Booleana
+{% endblock titulo %}
+{% block contenido %}
+<form method="POST" action=".">
+	{% csrf_token %}
+	Seleccione el Grado de la pregunta:
+	<br>
+	<select name="grado" value="grado">
+		<option value="1">Primaria</option>
+		<option value="2">Sexto y Séptimo</option>
+		<option value="3">Octavo y Noveno</option>
+	</select>
+	<br>
+	<p>Ingrese la pregunta:</p>
+	<input name="pregunta" type="text" required />
+	<br>
+	<input type="radio" name="booleana" value="1" checked />Verdadero
+	<input type="radio" name="booleana" value="2">Falso
+	<br><br>
+	<input type="submit" value="Guardar">
+</form>
+{% endblock contenido %}
