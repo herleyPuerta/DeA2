@@ -16,6 +16,7 @@ urlpatterns = patterns('deados.apps.home.views',
     url(r'^preguntas/teoricas/$', 'preguntas_teoricas_view', name='vistaPreguntasTeoricas'),
 
     url(r'^edit/pregunta/teorica/(?P<id_pregunta>.*)/$','edit_pregunta_teorica_view',name='vista_edit_teoria'),
+    
     url(r'^edit_pregunta_unica/$', 'edit_unica_view', name='vistaEditTeoriaUnicaPregunta'),
     url(r'^edit_respuesta_unica/$', 'edit_unica_respuesta_view', name='vistaEditTeoriaUnicaRespuesta'),
 
@@ -25,4 +26,8 @@ urlpatterns = patterns('deados.apps.home.views',
     url(r'^edit_pregunta_secuencial/$', 'edit_secuencial_view', name='vistaEditTeoriaSecuencialPregunta'),
     url(r'^edit_respuesta_secuencial/$', 'edit_secuencial_respuesta_view', name='vistaEditTeoriaSecuencialRespuesta'),
 
-    url(r'^edit_pregunta_booleana/$', 'edit_booleana_view', name='vistaEditTeoriaBooleanaPregunta'),    )
+    url(r'^edit_pregunta_booleana/$', 'edit_booleana_view', name='vistaEditTeoriaBooleanaPregunta'),
+    url(r'^edit_respuesta_booleana/$', 'edit_booleana_respuesta_view', name='vistaEditTeoriaBooleanaRespuesta'),
+
+    url(r'^delete/pregunta/teorica/(?P<id_pregunta>.*)/$','delete_pregunta_teorica_view',name='vista_delete_teoria'),
+    )

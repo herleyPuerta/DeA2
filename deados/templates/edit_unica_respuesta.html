@@ -7,23 +7,31 @@ Editar respuestas tipo Respuesta Única
 	{% csrf_token %}
 	<input type="hidden" name="idpregunta" value="{{pregunta.id}}" required>
 	{% if respuesta1 %}
-		1:
-		<p>{{respuesta1.contenido}}</p>
+	<h2>Pregunta</h2>
+	<h4>{{pregunta.contenido}}</h4>
 		<br><br>
-		<p>respuesta1:</p>
+		<h4>Editar las Respuestas:</h4>
+		<h5>respuesta 1:</h5>
 		<input type="hidden" name="id1" value="{{respuesta1.id}}" required>
-		<input type="text" name="respuesta1" value="{{respuesta1.contenido}}" required />
-		<p>respuesta2:</p>
-		<input type="hidden" name="id2" value="{{respuesta2.id}}" required>
-		<input type="text" name="respuesta2" value="{{respuesta2.contenido}}" required />
-		<p>respuesta3:</p>
-		<input type="hidden" name="id3" value="{{respuesta3.id}}" required>
-		<input type="text" name="respuesta3" value="{{respuesta3.contenido}}" required />
-		<p>respuesta4:</p>
-		<input type="hidden" name="id4" value="{{respuesta4.id}}" required>
-		<input type="text" name="respuesta4" value="{{respuesta4.contenido}}" required />
+		<textarea name="respuesta1" onKeyDown="textCounter(this.form.respuesta1,this.form.remLen1,40);" onKeyUp="textCounter(this.form.respuesta1,this.form.remLen1,40);" required />{{respuesta1.contenido}}</textarea>
 		<br>
-		Elige la Respuesta Correcta:
+		<input readonly class="count" type=text name="remLen1" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+		<h5>respuesta 2:</h5>
+		<input type="hidden" name="id2" value="{{respuesta2.id}}" required>
+		<textarea name="respuesta2" onKeyDown="textCounter(this.form.respuesta2,this.form.remLen2,40);" onKeyUp="textCounter(this.form.respuesta2,this.form.remLen2,40);" required />{{respuesta2.contenido}}</textarea>
+		<br>
+		<input readonly class="count" type=text name="remLen2" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+		<h5>respuesta 3:</h5>
+		<input type="hidden" name="id3" value="{{respuesta3.id}}" required>
+		<textarea name="respuesta3" nKeyDown="textCounter(this.form.respuesta3,this.form.remLen3,40);" onKeyUp="textCounter(this.form.respuesta3,this.form.remLen3,40);" required />{{respuesta3.contenido}}</textarea>
+		<br>
+		<input readonly class="count" type=text name="remLen3" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+		<h5>respuesta 4:</h5>
+		<input type="hidden" name="id4" value="{{respuesta4.id}}" required>
+		<textarea name="respuesta4" onKeyDown="textCounter(this.form.respuesta4,this.form.remLen4,40);" onKeyUp="textCounter(this.form.respuesta4,this.form.remLen4,40);" required />{{respuesta4.contenido}}</textarea>
+		<br>
+		<input readonly type=text class="count" name="remLen4" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+		<h4>Elige la Respuesta Correcta:</h4>
 		<input type="radio" name="unica" value="1" checked />
 		<input type="radio" name="unica" value="2">
 		<input type="radio" name="unica" value="3">

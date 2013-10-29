@@ -443,12 +443,31 @@ def edit_multiple_respuesta_view(request):
 			id4 = request.POST['id4']
 			idpregunta = request.POST['idpregunta']
 			pregunta = Pregunta.objects.get(id=idpregunta)
-			multiple = request.POST['multiple']
 			contenido1 = request.POST['respuesta1']
-			if multiple == "1":
-				determinacion1 = True
-			else:
+			try:
+				if request.POST['multiple1']:
+					determinacion1 = True
+			except:
 				determinacion1 = False
+
+			try:
+				if request.POST['multiple2']:
+					determinacion2 = True
+			except:
+				determinacion2 = False
+
+			try:
+				if request.POST['multiple3']:
+					determinacion3 = True
+			except:
+				determinacion3 = False
+
+			try:
+				if request.POST['multiple4']:
+					determinacion4 = True
+			except:
+				determinacion4 = False
+
 			respuesta1 = Respuesta_Multiple.objects.get(id=id1)
 			respuesta1.idPregunta = pregunta
 			respuesta1.contenido = contenido1
@@ -458,10 +477,6 @@ def edit_multiple_respuesta_view(request):
 
 			#respuesta 2
 			contenido2 = request.POST['respuesta2']
-			if multiple == "2":
-				determinacion2 = True
-			else:
-				determinacion2 = False
 			respuesta2 = Respuesta_Multiple.objects.get(id=id2)
 			respuesta2.idPregunta = pregunta
 			respuesta2.contenido = contenido2
@@ -470,12 +485,7 @@ def edit_multiple_respuesta_view(request):
 			respuesta2.save()
 
 			#respuesta 3
-			contenido3 = request.POST['respuesta3']
-			if multiple == "3":
-				determinacion3 = True
-			else:
-				determinacion3 = False
-			
+			contenido3 = request.POST['respuesta3']			
 			respuesta3 = Respuesta_Multiple.objects.get(id=id3)
 			respuesta3.idPregunta = pregunta
 			respuesta3.contenido = contenido3
@@ -484,10 +494,6 @@ def edit_multiple_respuesta_view(request):
 			respuesta3.save()
 			
 			contenido4 = request.POST['respuesta4']
-			if multiple == "4":
-				determinacion4 = True
-			else:
-				determinacion4 = False
 			respuesta4 = Respuesta_Multiple.objects.get(id=id4)
 			respuesta4.idPregunta = pregunta
 			respuesta4.contenido = contenido4
@@ -580,7 +586,7 @@ def edit_secuencial_respuesta_view(request):
 			respuesta4.save()
 			return render_to_response('pregunta_succes.html',locals(),context_instance=RequestContext(request))
 		else:
-			return render_to_response('pregunta_secuencial.html',locals(),context_instance=RequestContext(request))
+			return render_to_response('edit_secuencial_respuesta.html',locals(),context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect('/')
 
@@ -595,31 +601,71 @@ def edit_booleana_view(request):
 			grado = request.POST['grado']
 			categoria = 1
 			tipoRespuesta = 3
+
 			pregunta.idInstitucion = idInstitucion
 			pregunta.contenido = contenido
 			pregunta.grado = grado
 			pregunta.categoria = categoria
 			pregunta.tipoRespuesta = tipoRespuesta
 			pregunta.save()
+			#editar las respuestas asociadas a las preguntas
+			respuesta = Respuesta_Booleana.objects.get(idPregunta=idpregunta)
 
+			ctx = {'pregunta':pregunta,'respuesta':respuesta}
+			return render_to_response('edit_booleana_respuesta.html',ctx,context_instance=RequestContext(request))
+		else:
+			return render_to_response('edit_booleana_pregunta.html',locals(),context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/')
+
+def edit_booleana_respuesta_view(request):
+	if request.user.is_authenticated():
+		if request.method=="POST":
+			id1 = request.POST['id1']
+			idpregunta = request.POST['idpregunta']
+			pregunta = Pregunta.objects.get(id=idpregunta)
+			#guardar las respuestas.
 			booleana = request.POST['booleana']
+			#respuesta1 = Respuesta_Secuencial(idPregunta=pregunta,no_secuencia=1,contenido=contenido1,secuencia=secuencia1)
+			respuesta = Respuesta_Booleana(id=id1)
+			respuesta.idPregunta = pregunta
 			if booleana == "1":
 				determinacion = True
 				contenido = "verdadero"
 			else:
 				determinacion = False
 				contenido = "falso"
-			#respuesta = Respuesta_Booleana(idPregunta=pregunta,determinacion=determinacion,contenido=contenido)
-			respuesta = Respuesta_Booleana(idPregunta=pregunta)
-			respuesta.idPregunta = pregunta
-			respuesta.contenido = contenido
 			respuesta.determinacion = determinacion
+			respuesta.contenido = contenido	
 			respuesta.save()
 			return render_to_response('pregunta_succes.html',locals(),context_instance=RequestContext(request))
 		else:
-			return render_to_response('edit_booleana_pregunta.html',locals(),context_instance=RequestContext(request))
+			return render_to_response('edit_booleana_respuesta.html',locals(),context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect('/')
+
+def delete_pregunta_teorica_view(request,id_pregunta):
+	try:
+		pregunta = Pregunta.objects.get(id = id_pregunta)
+		pregunta.delete()
+	except Pregunta.DoesNotExist:
+		return HttpResponseRedirect("/")
+	return HttpResponseRedirect("/preguntas/teoricas/")
+
+
+
+
+
+def del_logro_view(request, id_logro):
+	try:
+		logro = Logro.objects.get(idLogro = id_logro)
+		logro.delete()
+	except Logro.DoesNotExist:
+		return HttpResponseRedirect("/")
+	
+	return HttpResponseRedirect("/")
+
+
 
 
 def logout_view(request):

@@ -13,7 +13,7 @@ class Respuesta_Secuencial_Admin(admin.ModelAdmin):
 	list_display = ('idPregunta','contenido','secuencia')
 
 class Respuesta_Booleana_Admin(admin.ModelAdmin):
-	list_display = ('idPregunta','determinacion')
+	list_display = ('idPregunta','determinacion','contenido')
 
 class Pregunta_Admin(admin.ModelAdmin):
 	list_display = ('contenido','tipoRespuesta')

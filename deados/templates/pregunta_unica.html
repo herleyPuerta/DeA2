@@ -5,32 +5,41 @@ Agregar Pregunta Con Respuesta Única
 {% block contenido %}
 <form method="POST" action=".">
 	{% csrf_token %}
-	Seleccione el Grado de la pregunta: <br>
+	<h4>Seleccione el Grado de la pregunta:</h4>
 	<select name="grado" value="grado">
 		<option value="1">Primaria</option>
 		<option value="2">Sexto y Séptimo</option>
 		<option value="3">Octavo y Noveno</option>
 	</select>
+	<h4>Ingrese la pregunta:</h4>
+	<textarea name="pregunta" onkeyDown="textCounter(this.form.pregunta,this.form.remlen,60);" onKeyUp="textCounter(this.form.pregunta,this.form.remLen,60);" required></textarea>
 	<br>
-	Ingrese la pregunta:
+	<input readonly class="count" type=text name=remLen size=3 maxlength=3 value="60" style="width:12px;height:10px;font-size:0.8em">
+	<h5>respuesta 1:</h5>
+	<textarea name="respuesta1" onkeyDown="textCounter(this.form.respuesta1,this.form.remlen,40);" onKeyUp="textCounter(this.form.respuesta1,this.form.remLen,40);" required></textarea>
+	</textarea>
 	<br>
-	<input name="pregunta" type="text" required   /> <br>
-
-	<p>respuesta1:</p>
-	<input type="text" name="respuesta1" required />
-	<p>respuesta2:</p>
-	<input type="text" name="respuesta2" required />
-	<p>respuesta3:</p>
-	<input type="text" name="respuesta3" required />
-	<p>respuesta4:</p>
-	<input type="text" name="respuesta4" required />
+	<input readonly class="count" type=text name="remLen1" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+	<h5>respuesta 2:</h5>
+	<textarea name="respuesta2" onKeyDown="textCounter(this.form.respuesta2,this.form.remLen2,40);" onKeyUp="textCounter(this.form.respuesta2,this.form.remLen2,40);" required /></textarea>
 	<br>
-	Elige la Respuesta Correcta:
-	<input type="radio" name="unica" value="1">
-	<input type="radio" name="unica" value="2">
-	<input type="radio" name="unica" value="3">
-	<input type="radio" name="unica" value="4">
+	<input readonly class="count" type=text name="remLen2" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+	<h5>respuesta 3:</h5>
+	<textarea name="respuesta3" onKeyDown="textCounter(this.form.respuesta3,this.form.remLen3,40);" onKeyUp="textCounter(this.form.respuesta3,this.form.remLen3,40);" required /></textarea>
 	<br>
+	<input readonly class="count" type=text name="remLen3" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+	<br>
+	<h5>respuesta 4:</h5>
+	<textarea name="respuesta4" onKeyDown="textCounter(this.form.respuesta4,this.form.remLen4,40);" onKeyUp="textCounter(this.form.respuesta4,this.form.remLen4,40);" required /></textarea>
+	<br>
+	<input readonly type=text class="count" name="remLen4" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+	<br>
+	<h4>Elige la Respuesta Correcta:</h4>
+	<input type="radio" name="unica" value="1">1
+	<input type="radio" name="unica" value="2">2
+	<input type="radio" name="unica" value="3">3
+	<input type="radio" name="unica" value="4">4
+	<br><br><br>
 	<input type="submit" value="Guardar">
 </form>
 {% endblock contenido %}

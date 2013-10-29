@@ -5,17 +5,17 @@ Registrar la nueva institucion
 {% block contenido %}
 <form method="POST" action=".">
 	{% csrf_token %}
-	Seleccione el nombre de la institucion
+	<h4>Seleccione el nombre de la institución</h4>
 	<select name="nombre">
         {% for i in instituciones %}
         	<option value="{{i}}" name="nombre">{{i}}</option>
         {% endfor %}
     </select>
     <br>
-    Seleccione una contraseña para la institucion
+    <h4>Seleccione una contraseña para la institución:</h4>
     <input type="password" name="password_one" required />
     <br>
-    Confirmar contraseña
+    <h4>Confirmar contraseña:</h4>
     <input type="password" name="password_two" required />
     <br>
     <input type="submit" value="registrar" required />

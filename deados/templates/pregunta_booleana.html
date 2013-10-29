@@ -5,7 +5,7 @@ Agregar Pregunta Booleana
 {% block contenido %}
 <form method="POST" action=".">
 	{% csrf_token %}
-	Seleccione el Grado de la pregunta:
+	<h4>Seleccione el Grado de la pregunta tipo verdadero o falso:</h4>
 	<br>
 	<select name="grado" value="grado">
 		<option value="1">Primaria</option>
@@ -13,8 +13,10 @@ Agregar Pregunta Booleana
 		<option value="3">Octavo y Noveno</option>
 	</select>
 	<br>
-	<p>Ingrese la pregunta:</p>
-	<input name="pregunta" type="text" required />
+	<h4>Ingrese la pregunta:</h4>
+	<textarea name="pregunta" required onKeyDown="textCounter(this.form.pregunta,this.form.remLen,60);" onKeyUp="textCounter(this.form.pregunta,this.form.remLen,60);" /></textarea>
+	<br>
+	<input readonly type=text class="count" name=remLen size=3 maxlength=3 value="60" style="width:12px;height:10px;font-size:0.8em">
 	<br>
 	<input type="radio" name="booleana" value="1" checked />Verdadero
 	<input type="radio" name="booleana" value="2">Falso

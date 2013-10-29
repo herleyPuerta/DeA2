@@ -8,11 +8,11 @@ Editar Pregunta Teorica
 	{% csrf_token %}
 	<input type="hidden" name="id" value="{{pregunta.id}}" required>
 	<br>
-	el grado actual es:
+	<h4>el grado actual es:</h4>
 	<br>
-	{{grados}}
+	<h5>{{grados}}</h5>
 	<br>
-	Seleccione el nuevo grado:
+	<h4>Seleccione el nuevo grado:</h4>
 	<br>
 	<select name="grado">
 		<option value="1" selected>Primaria</option>
@@ -20,14 +20,11 @@ Editar Pregunta Teorica
 		<option value="3">Octavo y noveno</option>
 	</select>
 	<br><br>
-	Editar el contenido:
+	<h4>Editar la Pregunta:</h4>
 	<br>
-	<input type="text" name="contenido" value="{{pregunta.contenido}}" required>
-	<br><br>
-	<input type="radio" name="booleana" value="1" checked />Verdadero
-	<input type="radio" name="booleana" value="2">Falso
-	<br><br>
-	<input type="submit" value="Guardar">
-
+	<textarea name="contenido" onKeyDown="textCounter(this.form.contenido,this.form.remLen,60);" onKeyUp="textCounter(this.form.contenido,this.form.remLen,60);" required>{{pregunta.contenido}}</textarea>
+	<br>
+	<input readonly class="count" type=text name=remLen size=3 maxlength=3 value="60" style="width:12px;height:10px;font-size:0.8em"><br><br>
+	<input type="submit" value="Editar Respuestas">
 </form>
 {% endblock contenido %}

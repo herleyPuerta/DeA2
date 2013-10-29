@@ -5,7 +5,7 @@ Agregar Pregunta Con Respuesta Múltiple
 {% block contenido %}
 <form method="POST" action=".">
 	{% csrf_token %}
-	Seleccione el Grado de la pregunta:
+	<h4>Seleccione el Grado de la pregunta:</h4>
 	<br>
 	<select name="grado" value="grado">
 		<option value="1">Primaria</option>
@@ -13,20 +13,32 @@ Agregar Pregunta Con Respuesta Múltiple
 		<option value="3">Octavo y Noveno</option>
 	</select>
 	<br>
-	Ingrese la pregunta: <br>
-	<input name="pregunta" type="text" required />
+	<h4>Ingrese la pregunta:</h4>
+	<textarea name="pregunta"  onKeyDown="textCounter(this.form.pregunta,this.form.remLen,60);" onKeyUp="textCounter(this.form.pregunta,this.form.remLen,60);" required /></textarea>
 	<br>
-	ingrese las respuestas: <br>
-	<p>respuesta1:</p>
-	<input type="text" name="respuesta1" required />
-	<p>respuesta2:</p>
-	<input type="text" name="respuesta2" required />
-	<p>respuesta3:</p>
-	<input type="text" name="respuesta3" required />
-	<p>respuesta4:</p>
-	<input type="text" name="respuesta4" required />
+	<input readonly class="count" type=text name=remLen size=3 maxlength=3 value="60" style="width:12px;height:10px;font-size:0.8em">
 	<br>
-	Elige las Respuestas Correctas: <br>
+	<h4>ingrese las respuestas:</h4>
+	<br>
+	<h5>respuesta1:</h5>
+	<textarea name="respuesta1" onKeyDown="textCounter(this.form.respuesta1,this.form.remLen1,40);" onKeyUp="textCounter(this.form.respuesta1,this.form.remLen1,40);" required /></textarea>
+	<br>
+	<input readonly class="count" type=text name="remLen1" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+	<h5>respuesta2:</h5>
+	<textarea name="respuesta2" onKeyDown="textCounter(this.form.respuesta2,this.form.remLen2,40);" onKeyUp="textCounter(this.form.respuesta2,this.form.remLen2,40);" required /></textarea>
+	<br>
+	<input readonly class="count" type=text name="remLen2" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+	<h5>respuesta3:</h5>
+	<textarea name="respuesta3" onKeyDown="textCounter(this.form.respuesta3,this.form.remLen3,40);" onKeyUp="textCounter(this.form.respuesta3,this.form.remLen3,40);" required /></textarea>
+	<br>
+	<input readonly class="count" type=text name="remLen3" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+	<h5>respuesta4:</h5>
+	<textarea name="respuesta4" onKeyDown="textCounter(this.form.respuesta4,this.form.remLen4,40);" onKeyUp="textCounter(this.form.respuesta4,this.form.remLen4,40);" required /></textarea>
+	<br>
+	<input readonly type=text class="count" name="remLen4" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+	<br>
+
+	<h4>Elige las Respuestas Correctas:</h4>
 	<input type="checkbox" name="multiple1" value="1" checked />
 	<input type="checkbox" name="multiple2" value="2">
 	<input type="checkbox" name="multiple3" value="3">
