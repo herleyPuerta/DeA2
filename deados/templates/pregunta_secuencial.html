@@ -6,44 +6,60 @@ Agregar Pregunta de Tipo Secuencial
 <form method="POST" action="." onsubmit="return validar();">
 	{% csrf_token %}
 	<h4>Seleccione el Grado de la pregunta Secuencial:</h4>
-	<br>
-	<select name="grado" value="grado">
-		<option value="1">Primaria</option>
-		<option value="2">Sexto y Séptimo</option>
-		<option value="3">Octavo y Noveno</option>
-	</select>
-	<br>
-	<h4>Ingrese la pregunta:</h4>
-	<textarea name="pregunta" onKeyDown="textCounter(this.form.pregunta,this.form.remLen,60);" onKeyUp="textCounter(this.form.pregunta,this.form.remLen,60);" required /></textarea>
-	<br>
-	<input readonly class="count" type=text name=remLen size=3 maxlength=3 value="60" style="width:12px;height:10px;font-size:0.8em">
-	<h4>Ingresa las Respuestas:</h4>
-	<h5>respuesta1:</h5>
-	<textarea name="respuesta1" onKeyDown="textCounter(this.form.respuesta1,this.form.remLen1,40);" onKeyUp="textCounter(this.form.respuesta1,this.form.remLen1,40);" required /></textarea>
-	<br>
-	<input readonly class="count" type=text name="remLen1" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
-	<h5>respuesta2:</h5>
-	<textarea name="respuesta2" onKeyDown="textCounter(this.form.respuesta2,this.form.remLen2,40);" onKeyUp="textCounter(this.form.respuesta2,this.form.remLen2,40);" required /></textarea>
-	<br>
-	<input readonly class="count" type=text name="remLen2" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
-	<h5>respuesta3:</h5>
-	<textarea name="respuesta3" onKeyDown="textCounter(this.form.respuesta3,this.form.remLen3,40);" onKeyUp="textCounter(this.form.respuesta3,this.form.remLen3,40);" required /></textarea>
-	<br>
-	<input readonly class="count" type=text name="remLen3" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
-	<h5>respuesta4:</h5>
-	<textarea name="respuesta4" onKeyDown="textCounter(this.form.respuesta4,this.form.remLen4,40);" onKeyUp="textCounter(this.form.respuesta4,this.form.remLen4,40);" required /></textarea>
-	<br>
-	<input readonly type=text class="count" name="remLen4" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
-	<h4>Elige la Secuencia Correcta de las respuestas:</h4>
-	<h5>Secuencia 1:</h5>
-	<input type="text" id="secuencia1" name="secuencia1" onKeyDown="textCounterSec(this.form.secuencia1,1);" onKeyUp="textCounterSec(this.form.secuencia1,1);" style="width:12px;height:10px;font-size:1em" required />
-	<h5>Secuencia 2:</h5>
-	<input type="text" id="secuencia2" name="secuencia2" onKeyDown="textCounterSec(this.form.secuencia2,1);" onKeyUp="textCounterSec(this.form.secuencia2,1);" style="width:12px;height:10px;font-size:1em" style="width:12px;height:10px;font-size:1em" required />
-	<h5>Secuencia 3:</h5>
-	<input type="text" id="secuencia3" name="secuencia3" onKeyDown="textCounterSec(this.form.secuencia3,1);" onKeyUp="textCounterSec(this.form.secuencia3,1);" style="width:12px;height:10px;font-size:1em" style="width:12px;height:10px;font-size:1em" required />
-	<h5>Secuencia 4:</h5>
-	<input type="text" id="secuencia4" name="secuencia4" onKeyDown="textCounterSec(this.form.secuencia4,1);" onKeyUp="textCounterSec(this.form.secuencia4,1);" style="width:12px;height:10px;font-size:1em" style="width:12px;height:10px;font-size:1em" required />
-	<br>
-	<input type="submit" value="Ingresar Respuestas">
+	<div class="select-question">
+		<select name="grado" value="grado" class="select">
+			<option value="1">Primaria</option>
+			<option value="2">Sexto y Séptimo</option>
+			<option value="3">Octavo y Noveno</option>
+		</select>
+	</div>
+	<div class="pregunta-respuesta">
+		<div class="pregunta">
+			<div class="titulo-pregunta">
+				<h4>Ingrese la pregunta:</h4>
+			</div>
+			<textarea name="pregunta" class="text-question" onKeyDown="textCounter(this.form.pregunta,this.form.remLen,60);" onKeyUp="textCounter(this.form.pregunta,this.form.remLen,60);" required /></textarea>
+			<br>
+			<input readonly class="count" type=text name=remLen size=3 maxlength=3 value="60" style="width:12px;height:10px;font-size:0.8em">
+		</div>
+		<div class="respuestas">
+			<div class="titulo-pregunta">
+				<h4>Ingrese las respuestas:</h4>
+			</div>
+			<textarea name="respuesta1" class="text-answer1" placeholder="respuesta 1" onKeyDown="textCounter(this.form.respuesta1,this.form.remLen1,40);" onKeyUp="textCounter(this.form.respuesta1,this.form.remLen1,40);" required /></textarea>
+			<br>
+			<input readonly class="count" type=text name="remLen1" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+			<br>
+			<textarea name="respuesta2" class="text-answer2" placeholder="respuesta 2" onKeyDown="textCounter(this.form.respuesta2,this.form.remLen2,40);" onKeyUp="textCounter(this.form.respuesta2,this.form.remLen2,40);" required /></textarea>
+			<br>
+			<input readonly class="count" type=text name="remLen2" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+			<br>
+			<textarea name="respuesta3" class="text-answer3" placeholder="respuesta 3" onKeyDown="textCounter(this.form.respuesta3,this.form.remLen3,40);" onKeyUp="textCounter(this.form.respuesta3,this.form.remLen3,40);" required /></textarea>
+			<br>
+			<input readonly class="count" type=text name="remLen3" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+			<br>
+			<textarea name="respuesta4" class="text-answer4" placeholder="respuesta 4" onKeyDown="textCounter(this.form.respuesta4,this.form.remLen4,40);" onKeyUp="textCounter(this.form.respuesta4,this.form.remLen4,40);" required /></textarea>
+			<br>
+			<input readonly type="text" class="count" name="remLen4" size=3 maxlength=3 value="40" style="width:12px;height:10px;font-size:0.8em">
+		</div>
+		<div class="check">
+			<div class="titulo-pregunta">
+				<h4>Secuencia:</h4>
+			</div>
+			<div class="sec1">
+				<input type="text" id="secuencia1" name="secuencia1" onKeyDown="textCounterSec(this.form.secuencia1,1);" onKeyUp="textCounterSec(this.form.secuencia1,1);" style="width:12px;height:10px;font-size:1em" required />
+			</div>
+			<div class="sec2">
+				<input type="text" id="secuencia2" name="secuencia2" onKeyDown="textCounterSec(this.form.secuencia2,1);" onKeyUp="textCounterSec(this.form.secuencia2,1);" style="width:12px;height:10px;font-size:1em" required />
+			</div>
+			<div class="sec3">
+				<input type="text" id="secuencia3" name="secuencia3" onKeyDown="textCounterSec(this.form.secuencia3,1);" onKeyUp="textCounterSec(this.form.secuencia3,1);" style="width:12px;height:10px;font-size:1em" required />
+			</div>
+			<div class="sec4">
+				<input type="text" id="secuencia4" name="secuencia4" onKeyDown="textCounterSec(this.form.secuencia4,1);" onKeyUp="textCounterSec(this.form.secuencia4,1);" style="width:12px;height:10px;font-size:1em" style="width:12px;height:10px;font-size:1em" required />
+			</div>
+		</div>
+	</div>
+	<input type="submit" value="Guardar">
 </form>
 {% endblock contenido %}

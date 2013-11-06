@@ -13,7 +13,9 @@ urlpatterns = patterns('deados.apps.home.views',
     url(r'^add_pregunta_multiple/$', 'add_pregunta_multiple_view', name='vistaAddPreguntaTeoriaMultiple'),
     url(r'^add_pregunta_secuencial/$', 'add_pregunta_secuencial_view', name='vistaAddPreguntaTeoriaSecuencial'),
     url(r'^add_pregunta_booleana/$', 'add_pregunta_booleana_view', name='vistaAddPreguntaTeoriaBooleana'),
-    url(r'^preguntas/teoricas/$', 'preguntas_teoricas_view', name='vistaPreguntasTeoricas'),
+    
+    url(r'^preguntas/teoricas/page/(?P<pagina>.*)/$', 'preguntas_teoricas_view', name='vistaPreguntasTeoricas'),
+    #url(r'^productos/page/(?P<pagina>.*)/$','productos_view', name='vista_productos'),
 
     url(r'^edit/pregunta/teorica/(?P<id_pregunta>.*)/$','edit_pregunta_teorica_view',name='vista_edit_teoria'),
     

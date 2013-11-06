@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from deados.apps.home.models import Institucion, Institucion_nombre, Pregunta, Respuesta_Unica, Respuesta_Multiple, Respuesta_Secuencial, Respuesta_Booleana
 from deados.apps.home.forms import RegisterInstitucionForm
+from django.core.paginator import Paginator,EmptyPage,InvalidPage
 
 def index_view(request):
 	if request.user.is_authenticated():
@@ -233,7 +234,7 @@ def add_pregunta_booleana_view(request):
 				determinacion = True
 				contenido = "verdadero"
 			else:
-				determinacion = False
+				determinacion = True
 				contenido = "falso"
 			respuesta = Respuesta_Booleana(idPregunta=pregunta,determinacion=determinacion,contenido=contenido)
 			respuesta.save()
@@ -272,12 +273,21 @@ def register_institucion_view(request):
 		instituciones = Institucion_nombre.objects.all()
 		return render_to_response('datosInstitucion.html',locals(),context_instance=RequestContext(request))
 
-def preguntas_teoricas_view(request):
+def preguntas_teoricas_view(request,pagina):
 	if request.user.is_authenticated():
 		institucion = request.user
 		idInstitucion = Institucion.objects.get(user=institucion)
 		preguntas_teoricas = Pregunta.objects.filter(idInstitucion=idInstitucion)
-		ctx = {'preguntas_teoricas':preguntas_teoricas,'usuario':request.user}
+		paginator = Paginator(preguntas_teoricas,4) #cantidad de preguntas por pagina
+		try:
+			page = int(pagina)
+		except:
+			page = 1
+		try:
+			preguntas = paginator.page(page)
+		except (EmptyPage,InvalidPage):
+			preguntas = paginator.page(paginator.num_pages)
+		ctx = {'preguntas_teoricas':preguntas,'usuario':request.user}
 		return render_to_response('preguntas_teoricas.html',ctx,context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect('/')
@@ -633,7 +643,7 @@ def edit_booleana_respuesta_view(request):
 				determinacion = True
 				contenido = "verdadero"
 			else:
-				determinacion = False
+				determinacion = True
 				contenido = "falso"
 			respuesta.determinacion = determinacion
 			respuesta.contenido = contenido	
@@ -650,10 +660,7 @@ def delete_pregunta_teorica_view(request,id_pregunta):
 		pregunta.delete()
 	except Pregunta.DoesNotExist:
 		return HttpResponseRedirect("/")
-	return HttpResponseRedirect("/preguntas/teoricas/")
-
-
-
+	return HttpResponseRedirect("/preguntas/teoricas/page/1/")
 
 
 def del_logro_view(request, id_logro):
@@ -666,8 +673,21 @@ def del_logro_view(request, id_logro):
 	return HttpResponseRedirect("/")
 
 
-
-
 def logout_view(request):
 	logout(request)
 	return HttpResponseRedirect('/')
+
+@csrf_exempt
+def new_event_view(request):
+  json_data = request.read()
+  eventoObj = json.loads(json_data)
+  p_user = User.objects.get(username= eventoObj["Username"],email = eventoObj['Email'])
+  listLugar = eventoObj['lugar']
+  place = Place(address = listLugar[0], city = listLugar[1] , country = listLugar[2])
+  evento = Event(creador = p_user, nombre = eventoObj["nombre"], descripcion = eventoObj["descripcion"], fecha_realizacion = eventoObj["fecha"], hora = eventoObj["hora"], privacidad = eventoObj["privacidad"], cantidad_invitados = eventoObj["cantidadinvitados"], aprobar_asistencia = eventoObj["aprobarasistencia"], tipo = eventoObj["tipoevento"], lugar = place)
+  evento.save() 
+  #return render_to_response('index.html',locals(),  context_instance=RequestContext(request))
+  return HttpResponse("Evento creado con exitosamente")
+
+def register_player_view(request):
+	

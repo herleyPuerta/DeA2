@@ -28,12 +28,13 @@ class Jugador(models.Model):
 class Pregunta(models.Model):
 	OPCIONES_GRADO		= ((1,'primaria'),(2,'sexto_septimo'),(3,'octavo_noveno'))
 	OPCIONES_CATEGORIA	= ((1,'teoria'),(2,'agilidad_mental'))
-	OPCIONES_RESPUESTA	= ((1,'unica_respuesta'),(2,'multiple_repuesta'),(3,'booleana'),(4,'secuencial'))
+	OPCIONES_RESPUESTA	= ((1,'unica_respuesta'),(2,'multiple_repuesta'),(3,'booleana'),(4,'secuencial'),(5,'agilidad_mental'))
 	idInstitucion		= models.ForeignKey(Institucion)
 	contenido			= models.CharField(max_length=61)
 	grado    			= models.IntegerField(choices=OPCIONES_GRADO, default=1)
 	categoria			= models.IntegerField(choices=OPCIONES_CATEGORIA,default=1)
 	tipoRespuesta		= models.IntegerField(choices=OPCIONES_RESPUESTA,default=1)
+	fechaRegistro 	    = models.DateField(auto_now_add=True)
 
 	def __unicode__(self):
 		return self.contenido
@@ -69,3 +70,13 @@ class Respuesta_Booleana(models.Model):
 
 	def __unicode__(self):
 		return self.contenido
+"""
+class Respuesta_Agilidad(models.Model):
+	def url(self,filename):
+		return "images/respuestas/agilidad/%s/%s"%(self.idPregunta,filename)
+	idPregunta = models.ForeignKey(Pregunta)
+	imagen = models.ImageField(upload_to=url)
+	determinacion = models.BooleanField(default=False)
+
+	def __unicode__(self):
+"""

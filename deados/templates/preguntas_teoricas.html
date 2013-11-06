@@ -34,4 +34,21 @@ Preguntas de usario
 	{% else %}
 		<h2>aún no has registrado preguntas</h2>
 	{% endif %}
+	{% if preguntas_teoricas %}
+		<a href="/preguntas/teoricas/page/1/"> << </a>
+		{% if preguntas_teoricas.has_previous %}
+			<a href="/preguntas/teoricas/page/{{preguntas_teoricas.previous_page_number}}">Anterior</a>
+		{% else %}
+			<a href="#">Anterior</a>
+		{% endif %}
+		{% if preguntas_teoricas.has_next %}
+			<a href="/preguntas/teoricas/page/{{preguntas_teoricas.next_page_number}}">Siguiente</a>
+		{% else %}
+			<a href="#">Siguiente</a>
+		{% endif %}
+		<a href="/preguntas/teoricas/page/{{preguntas_teoricas.paginator.num_pages }}"> >> </a>
+		<br><br><br>
+		<h4>Página {{ preguntas_teoricas.number }} de {{ preguntas_teoricas.paginator.num_pages }} </h4>
+	{% endif %}
+
 {% endblock contenido %}

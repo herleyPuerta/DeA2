@@ -7,30 +7,27 @@ body{
 	font-family:"Trebuchet MS", "Myriad Pro", Arial, sans-serif;
 	font-size:14px;
 	text-align: center;
-	/*background:#f4f4f4;*/
-	background: red;
+	background:#f4f4f4;
 	color:#333;
-	text-shadow:1px 1px 1px #fff;
 	overflow-y:scroll;
 }
 
 nav{
-	display: inline-block;
-	margin: 20px;
-	margin-left: 3.1%;
-	width: 92%;
-	max-width: 95%;
+	margin: 0.5em auto;
+	max-width: 1260px;
 	height: 80px;
 }
 
 nav ul{
+	margin: 0.5em auto;
 	height: 100%;
-	background:rgba(0,25,0,0.8);/*negro transparente*/
+	background:rgba(0,25,0,0.8);
 	font-size:0;
 	padding:0;
-	border-radius: 6px;
-	position: relative;
+	border-radius: 7px;
+	width: 100%;
 	box-shadow: 0 0 2px 2px #888;
+	list-style: none;
 }
 
 nav ul li{
@@ -42,40 +39,204 @@ nav ul li{
 	text-align:center;
 	vertical-align: top;
 	width:25%;
-
+	text-shadow: 0px 1px 0px #FFF;
+	border: 0px solid rgba(240,240,240,0.8);
 }
 
 nav ul li:hover{
 	background:rgba(2,2,2,.3);
 }
 
+	/*
+	'Felipa', cursive;
+	font-family: 'Underdog', cursive;
+	font-family: 'Metal Mania', cursive;
+	font-family: 'Prosto One', cursive;
+	*/
 nav ul li a{
-	color:white;
+	font-family: 'Underdog', cursive;
+	font-size: 19px;	
+	color:rgba(96,123,139,.8);
 	text-transform:uppercase;
-	text-decoration: none
+	text-decoration: none;
+	padding: 25px;
+	letter-spacing: 1px; 
+}
+
+nav ul li a:hover {
+    color:rgba(94,120,135,.8);
+    text-decoration: none;
 }
 
 .contenido{
 	color:black;
-	margin: 20px;
-	margin-left: 5%;
-	width: 90%;
-	max-width: 95%;
+	margin: 2em;
+	margin-left: 3.8%;
+	margin-right: 3.8%;
+	/*margin: 20px;
+	margin-left: 4.7%;*/
+	max-width: 1260px;
 	border-radius: 6px;
 	background:rgba(96,123,139,.8);
+	padding: 0;
 	padding-top: 50px;
 	box-shadow: 2px 2px 2px 2px #888;
 	padding-bottom: 40px;
 }
 
-.count{
-	margin-left: 180px;
-	margin-top: 0px;
+h2{
+	font-family: 'Metal Mania', cursive;
+	font-size: 2em;
+	margin: 100px;
+	text-shadow: 5px 5px 10px rgba(255,255,255,0.5);
+}
+
+.titulo-pregunta{
+	font-family: 'Rationale', sans-serif;
+}
+
+.select{
+	width: 25%;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	background: rgba(200,200,200,0.8);
+	margin-bottom: 80px;
+}
+
+.select:focus{
+	outline:0px;
+}
+
+.pregunta-respuesta{
+	max-width: 1260px;
+	padding: 0;
+	text-align: center;
+}
+.pregunta,.respuestas,.check{
+	border-radius: 0.5em;
+	display: inline-block;
+	max-width: 1260px;
+	min-height: 200px;
+	padding: 0.25em;
+	text-align: center;
+	vertical-align: top;
+	width: 30%;
+}
+
+.pregunta{
+}
+
+.text-question{
+	margin: 8px;
+	border: none;
+	box-shadow: 2px 2px 2px 2px #888;
+	font-family: 'Radley', serif;
+	resize:none;
+	margin-bottom: 5px;
+	margin-top: 24px;
 }
 
 
+.count{
+	font-family: 'Radley', serif;
+	margin-left: 180px;
+	margin-top: 0px;
+	margin-bottom: 10000px;
+}
+.respuestas{
+	width: 30%;
+	padding: 10px;
+}
 
+.text-answer{
+	box-shadow: 2px 2px 2px 2px #888;
+	font-family: 'Radley', serif;
+	border: none;
+	resize:none;
+}
 
+.text-answer1,.text-answer2{
+	box-shadow: 2px 2px 2px 2px #888;
+	font-family: 'Radley', serif;
+	margin-top:20px;
+	border: none;
+	resize:none;
+}
 
+.text-answer3,.text-answer4{
+	box-shadow: 2px 2px 2px 2px #888;
+	font-family: 'Radley', serif;
+	margin-top: 30px;
+	border: none;
+	resize:none;
+}
+.check,.sec{
+	width: 8%;
+	padding-top: 0;
+	margin-left: -20px;
+}
 
+.check1{
+	margin-top: 50px;
+}
 
+.check2{
+	margin-top: 60px;
+}
+
+.check3{
+	margin-top: 80px;
+}
+
+.check4{
+	margin-top: 80px;
+}
+
+.sec1:focus{
+	outline:0px;
+}
+
+.sec1{
+	border: none;
+	border-width: 0;
+	margin-top: 50px;
+}
+
+.sec2{
+	border: none;
+	margin-top: 70px;
+}
+
+.sec3{
+	border: none;
+	margin-top: 90px;
+}
+
+.sec4{
+	border: none;
+	margin-top: 90px;
+}
+
+.guardar{
+	padding: 3px;
+	font-family:"Trebuchet MS", "Myriad Pro", Arial, sans-serif;
+	font-size:14px;
+	color: white;
+	background:rgba(45, 24, 215, 1);
+}
+
+.text-answer-edit{
+	box-shadow: 2px 2px 2px 2px #888;
+	font-family: 'Radley', serif;
+	margin-top:20px;
+	border: none;
+	resize:none;
+	width: 26%;
+	max-width:22em; 
+
+}
+
+.count-edit{
+	margin-left: 180px;
+}

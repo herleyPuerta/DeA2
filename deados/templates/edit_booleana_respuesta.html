@@ -11,8 +11,13 @@ Editar respuesta tipo verdadero o falso
 	<br><br>
 	<input type="hidden" name="idpregunta" value="{{pregunta.id}}" required>
 	<input type="hidden" name="id1" value="{{respuesta.id}}" required>
-	<input type="radio" name="booleana" value="1" checked />Verdadero
-	<input type="radio" name="booleana" value="2">Falso
+	{% if respuesta.contenido == "verdadero" %}
+		<input type="radio" name="booleana" value="1" checked />Verdadero
+		<input type="radio" name="booleana" value="2">Falso
+	{% else %}
+		<input type="radio" name="booleana" value="1">Verdadero
+		<input type="radio" name="booleana" value="2" checked />Falso
+	{% endif %}
 	<input type="submit" value="Guardar">
 </form>
 {% endblock contenido %}

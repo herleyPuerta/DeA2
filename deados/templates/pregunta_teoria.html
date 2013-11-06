@@ -5,15 +5,15 @@ Perfil de usuario
 {% block contenido %}
 <form method="POST" action=".">
 	{% csrf_token %}
-	<p>tipo de pregunta: </p>
+	<h2>tipo de la pregunta:</h2>
 	<br><br>
-	<select name="tipoRespuesta">
+	<select name="tipoRespuesta" class="select">
 		<option value="unica_respuesta">Multiples Opciones, única respuesta</option>
 		<option value="multiple_repuesta">Multiples Opciones, múltiples respuestas</option>
 		<option value="booleana">verdadero ó falso</option>
 		<option value="secuencial">Secuencial</option>
 	</select>
 	<br><br><br>
-	<input type="submit" value="Guardar">
+	<input type="submit" value="Crear Pregunta" class="guardar">
 </form>
 {% endblock contenido %}
