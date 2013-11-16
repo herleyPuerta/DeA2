@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-# Create your models here.
+from base64 import b64decode
+from django.core.files.base import ContentFile
 
 class Institucion_nombre(models.Model):
 	nombre = models.CharField(max_length=100)
@@ -11,10 +11,12 @@ class Institucion_nombre(models.Model):
 
 class Institucion(models.Model):
 	user = models.ForeignKey(User,related_name='perfil',unique=True)
+
 	def __unicode__(self):
 		return self.user.username
 
 class Jugador(models.Model):
+	identificacion   = models.CharField(max_length=30)
 	nombre			 = models.CharField(max_length=90)
 	idInstitucion	 = models.ForeignKey(Institucion)
 	puntos_totales	 = models.IntegerField()
@@ -25,6 +27,7 @@ class Jugador(models.Model):
 	def __unicode__(self):
 		return self.nombre
 		
+
 class Pregunta(models.Model):
 	OPCIONES_GRADO		= ((1,'primaria'),(2,'sexto_septimo'),(3,'octavo_noveno'))
 	OPCIONES_CATEGORIA	= ((1,'teoria'),(2,'agilidad_mental'))
@@ -36,11 +39,26 @@ class Pregunta(models.Model):
 	tipoRespuesta		= models.IntegerField(choices=OPCIONES_RESPUESTA,default=1)
 	fechaRegistro 	    = models.DateField(auto_now_add=True)
 
+	def get_answers_unicas(self):
+		return Respuesta_Unica.objects.filter(idpregunta=self)
+
+	def get_answers_multiples(self):
+		return Respuesta_Multiple.objects.filter(idpregunta=self)
+
+	def get_answers_booleanas(self):
+		return Respuesta_Booleana.objects.filter(idpregunta=self)
+
+	def get_answers_secuenciales(self):
+		return Respuesta_Secuencial.objects.filter(idpregunta=self)
+
+	def get_answers_agilidad(self):
+		return Respuesta_Agilidad.objects.filter(idpregunta=self)
+
 	def __unicode__(self):
 		return self.contenido
 
 class Respuesta(models.Model):
-	idPregunta	 = models.ForeignKey(Pregunta)
+	idpregunta	 = models.ForeignKey(Pregunta)
 	contenido	 = models.CharField(max_length=41)
 	no_secuencia = models.IntegerField()
 
@@ -49,7 +67,9 @@ class Respuesta(models.Model):
 
 class Respuesta_Unica(Respuesta):
 	determinacion = models.BooleanField(default=False)
+
 	def __unicode__(self):
+		#return u"%s (%s)" % (self.contenido, u", ".join([idpregunta.contenido for idpregunta in self.idpregunta.all()]))
 		return self.contenido
 
 class Respuesta_Multiple(Respuesta):
@@ -64,19 +84,44 @@ class Respuesta_Secuencial(Respuesta):
 		return self.contenido
 
 class Respuesta_Booleana(models.Model):
-	idPregunta	  = models.ForeignKey(Pregunta)
+	idpregunta	  = models.ForeignKey(Pregunta)
 	contenido 	  = models.CharField(max_length=41)
 	determinacion = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.contenido
-"""
+
 class Respuesta_Agilidad(models.Model):
 	def url(self,filename):
-		return "images/respuestas/agilidad/%s/%s"%(self.idPregunta,filename)
-	idPregunta = models.ForeignKey(Pregunta)
-	imagen = models.ImageField(upload_to=url)
+		return "images/respuestas/agilidad/%s"%(filename)
+
+	def thumbnail(self):
+		return '<a href="/media/%s"><img src="/media/%s" width=50px heigth=50px/></a>'%(self.imagen,self.imagen)
+
+	thumbnail.allow_tags = True
+
+	idpregunta 	  = models.ForeignKey(Pregunta)
+	imagen 		  = models.ImageField(upload_to=url)
 	determinacion = models.BooleanField(default=False)
+	contenido     = models.CharField(max_length=41)
 
 	def __unicode__(self):
-"""
+		return self.contenido
+
+
+class Imagen(models.Model):
+
+	def url(self,filename):
+		return "images/agilidad_mental/%s"%(filename)
+
+	def thumbnail(self):
+		return '<a href="/media/%s"><img src="/media/%s" width=50px heigth=50px/></a>'%(self.archivo,self.archivo)
+
+	thumbnail.allow_tags = True
+
+	archivo  	 = models.ImageField(upload_to=url)
+	tipo 	     = models.CharField(max_length=60)
+	content_type = models.CharField(max_length=40)
+
+	def __unicode__(self):
+		return self.tipo

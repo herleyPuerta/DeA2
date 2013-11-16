@@ -113,6 +113,7 @@ h2{
 	padding: 0;
 	text-align: center;
 }
+
 .pregunta,.respuestas,.check{
 	border-radius: 0.5em;
 	display: inline-block;
@@ -122,9 +123,6 @@ h2{
 	text-align: center;
 	vertical-align: top;
 	width: 30%;
-}
-
-.pregunta{
 }
 
 .text-question{
@@ -239,4 +237,37 @@ h2{
 
 .count-edit{
 	margin-left: 180px;
+}
+
+.canvas-imagenes{
+	max-width: 1260px;
+	padding: 0;
+	text-align: center;
+}
+
+.contenedor-canvas{
+	border-radius: 0.5em;
+	display: inline-block;
+	max-width: 1260px;
+	min-height: 200px;
+	padding: 0.25em;
+	text-align: center;
+	vertical-align: top;
+	width: 30%;
+}
+
+.imagenes{
+	border-radius: 0.5em;
+	display: inline-block;
+	max-width: 1260px;
+	min-height: 200px;
+	padding: 0.25em;
+	text-align: center;
+	vertical-align: top;
+	width: 30%;
+}
+
+#canvas1,#canvas2,#canvas3,#canvas4,#canvas5,#canvas6{
+	border:4px solid gray;
+	width: 300px;
 }

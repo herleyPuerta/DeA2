@@ -8,10 +8,12 @@
  DROP TABLE public.django_content_type CASCADE;
  DROP TABLE public.django_session CASCADE;
  DROP TABLE public.django_site CASCADE;
+ DROP TABLE public.home_imagen CASCADE;
  DROP TABLE public.home_institucion CASCADE;
  DROP TABLE public.home_institucion_nombre CASCADE;
  DROP TABLE public.home_jugador CASCADE;
  DROP TABLE public.home_pregunta CASCADE;
+ DROP TABLE public.home_respuesta_agilidad CASCADE;
  DROP TABLE public.home_respuesta_booleana CASCADE;
  DROP TABLE public.home_respuesta_multiple CASCADE;
  DROP TABLE public.home_respuesta_secuencial CASCADE;

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}
+	Respuesta Agilidad Mental
+{% endblock title %}
+{% block contenido %}
+<h4>Pregunta:</h4>
+{{pregunta.contenido}}
+
+<form method="POST" id="formId" action="." enctype="multipart/form-data" onsubmit="return save();">
+	{% csrf_token %}
+	<input type="hidden" id="idpregunta" name="idpregunta" value="{{pregunta.id}}" required>
+	<div class="canvas-imagenes">
+		<div class="contenedor-canvas">
+			<h4>Respuesta 1:</h4>
+			<input type="radio" name="agilidad" value="1" checked />
+			<canvas id="canvas1" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop1(event)"></canvas>
+			<h4>Respuesta 2:</h4>
+			<input type="radio" name="agilidad" value="2">
+			<canvas id="canvas2" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop2(event)"></canvas>
+			<h4>Respuesta 3:</h4>
+			<input type="radio" name="agilidad" value="3">
+			<canvas id="canvas3" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop3(event)"></canvas>
+			<h4>Respuesta 4:</h4>
+			<input type="radio" name="agilidad" value="4">
+			<canvas id="canvas4" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop4(event)"></canvas>
+			<h4>Respuesta 5:</h4>
+			<input type="radio" name="agilidad" value="5">
+			<canvas id="canvas5" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop5(event)"></canvas>
+			<h4>Respuesta 6:</h4>
+			<input type="radio" name="agilidad" value="6">
+			<canvas id="canvas6" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop6(event)"></canvas>
+		</div>
+		<input type="submit" value="guardar">
+</form>
+		<div class="imagenes">
+			<h4>Imagenes</h4>
+			{% if  imagenes %}
+				{% for imagen in imagenes %}
+				<img src="/media/{{imagen.archivo}}" id="{{imagen.id}}" draggable="true" ondragstart="return empezar(event)" ondragend="return end(event)" width="60px" height="60px">
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+{% endblock contenido %}

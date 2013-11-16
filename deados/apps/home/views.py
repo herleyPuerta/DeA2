@@ -1,11 +1,17 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
-from deados.apps.home.models import Institucion, Institucion_nombre, Pregunta, Respuesta_Unica, Respuesta_Multiple, Respuesta_Secuencial, Respuesta_Booleana
+from deados.apps.home.models import Institucion, Institucion_nombre, Pregunta, Respuesta_Unica, Respuesta_Multiple, Respuesta_Secuencial, Respuesta_Booleana, Jugador, Imagen, Respuesta_Agilidad
 from deados.apps.home.forms import RegisterInstitucionForm
 from django.core.paginator import Paginator,EmptyPage,InvalidPage
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
+import json
+import base64
+#from base64 import b64decode
+from django.core.files.base import ContentFile
 
 def index_view(request):
 	if request.user.is_authenticated():
@@ -54,6 +60,144 @@ def add_pregunta_view(request):
 	else:
 		return HttpResponseRedirect('/')
 
+def add_pregunta_agilidad_view(request):
+	if request.user.is_authenticated():
+		if request.method == "POST":
+			institucion = request.user
+			idInstitucion = Institucion.objects.get(user=institucion)
+			categoria = 2
+			grado = request.POST['grado']
+			contenido  = request.POST['pregunta']
+			pregunta = Pregunta(idInstitucion=idInstitucion,contenido=contenido,grado=grado,categoria=categoria,tipoRespuesta=5)
+			pregunta.save()
+			imagenes = Imagen.objects.all()
+			rangos = range(1,6)
+			return render_to_response('respuesta_agilidad.html',locals(),context_instance=RequestContext(request))
+		else:
+			return render_to_response('pregunta_agilidad.html',locals(),context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/')
+
+def decode_base64(data):
+    """Decode base64, padding being optional.
+
+    :param data: Base64 data as an ASCII byte string
+    :returns: The decoded byte string.
+
+    """
+    missing_padding = 4 - len(data) % 4
+    if missing_padding:
+        data += b'='* missing_padding
+    return base64.decodestring(data)
+
+
+@csrf_exempt
+def add_respuesta_agilidad_view(request):
+	if request.user.is_authenticated():
+		if request.method == "POST":
+			idpregunta = request.POST['idpregunta']
+			imagen1 = request.FILES['imagen1']
+			#image_data = decode_base64(imagen1)
+			#image_data = base64.b64decode(imagen1)
+			idpregunta = request.POST['idpregunta']
+			pregunta = Pregunta.objects.get(id=idpregunta)
+			#imagene = ContentFile(image_data, 'imagen1.png')
+			#photo.image.save(name, ContentFile(buffer))
+			respuesta = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen1,determinacion=True,contenido="verdadero")
+			#respuesta.idpregunta=pregunta
+			#respuesta.imagen.save(image_data,ContentFile(buffer))
+			respuesta.save()
+			print "respuesta guardada"
+			#print imgdata
+			if(respuesta.save()):
+				return HttpResponseRedirect('/')
+		else:
+			return render_to_response('respuesta_agilidad.html',locals(),context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/')
+
+def translate_non_alphanumerics(to_translate, translate_to=u'_'):
+    not_letters_or_digits = u'!"#%\'()*+,-./:;<=>?@[\]^_`{|}~'
+    if isinstance(to_translate, unicode):
+        translate_table = dict((ord(char), unicode(translate_to))
+                               for char in not_letters_or_digits)
+    else:
+        assert isinstance(to_translate, str)
+        translate_table = string.maketrans(not_letters_or_digits,
+                                           translate_to
+                                              *len(not_letters_or_digits))
+    return to_translate.translate(translate_table)
+
+
+"""
+def add_respuesta_agilidad_view(request):
+	if request.user.is_authenticated():
+		if request.method == "POST":
+			idpregunta = request.POST['idpregunta']
+			pregunta = Pregunta.objects.get(id=idpregunta)
+			agilidad = request.POST['agilidad']
+			if agilidad == "1":
+				determinacion1 = True
+				contenido1 = "Verdadero"
+			else:
+				determinacion1 = False
+				contenido1 = "Falso"
+			imagen1 = request.FILES['imagen1']
+			respuesta1 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen1,determinacion=determinacion1,contenido=contenido1)
+			respuesta1.save()
+			if agilidad == "2":
+				determinacion2 = True
+				contenido2 = "Verdadero"
+			else:
+				determinacion2 = False
+				contenido2 = "Falso"
+			imagen2 = request.FILES['imagen2']
+			respuesta2 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen2,determinacion=determinacion2,contenido=contenido2)
+			respuesta2.save()
+			if agilidad == "3":
+				determinacion3 = True
+				contenido3 = "Verdadero"
+			else:
+				determinacion3 = False
+				contenido3 = "Falso"
+			imagen3 = request.FILES['imagen3']
+			respuesta3 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen3,determinacion=determinacion3,contenido=contenido3)
+			respuesta3.save()
+			if agilidad == "4":
+				determinacion4 = True
+				contenido4 = "Verdadero"
+			else:
+				determinacion4 = False
+				contenido4 = "Falso"
+			imagen4 = request.FILES['imagen4']
+			respuesta4 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen4,determinacion=determinacion4,contenido=contenido4)
+			respuesta4.save()
+			if agilidad == "5":
+				determinacion5 = True
+				contenido5 = "Verdadero"
+			else:
+				determinacion5 = False
+				contenido5 = "Falso"
+			imagen5 = request.FILES['imagen5']
+			respuesta5 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen5,determinacion=determinacion5,contenido=contenido5)
+			respuesta5.save()
+			if agilidad == "6":
+				determinacion6 = True
+				contenido6 = "Verdadero"
+			else:
+				determinacion6 = False
+				contenido6 = "Falso"
+			imagen6 = request.FILES['imagen6']
+			respuesta6 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen6,determinacion=determinacion6,contenido=contenido6)
+			respuesta6.save()
+			return render_to_response('pregunta_succes.html',locals(),context_instance=RequestContext(request))
+		else:
+			return render_to_response('respuesta_agilidad.html',locals(),context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/')
+"""
+
+
 def add_pregunta_teoria_view(request):
 	if request.user.is_authenticated():
 		if request.method=="POST":
@@ -94,28 +238,28 @@ def add_pregunta_unica_view(request):
 				determinacion1 = True
 			else:
 				determinacion1 = False
-			respuesta1 = Respuesta_Unica(idPregunta=pregunta,no_secuencia=1,contenido=contenido1,determinacion=determinacion1)
+			respuesta1 = Respuesta_Unica(idpregunta=pregunta,no_secuencia=1,contenido=contenido1,determinacion=determinacion1)
 			respuesta1.save()
 			contenido2 = request.POST['respuesta2']
 			if unica == "2":
 				determinacion2 = True
 			else:
 				determinacion2 = False
-			respuesta2 = Respuesta_Unica(idPregunta=pregunta,no_secuencia=2,contenido=contenido2,determinacion=determinacion2)
+			respuesta2 = Respuesta_Unica(idpregunta=pregunta,no_secuencia=2,contenido=contenido2,determinacion=determinacion2)
 			respuesta2.save()
 			contenido3 = request.POST['respuesta3']
 			if unica == "3":
 				determinacion3 = True
 			else:
 				determinacion3 = False
-			respuesta3 = Respuesta_Unica(idPregunta=pregunta,no_secuencia=3,contenido=contenido3,determinacion=determinacion3)
+			respuesta3 = Respuesta_Unica(idpregunta=pregunta,no_secuencia=3,contenido=contenido3,determinacion=determinacion3)
 			respuesta3.save()
 			contenido4 = request.POST['respuesta4']
 			if unica == "4":
 				determinacion4 = True
 			else:
 				determinacion4 = False
-			respuesta4 = Respuesta_Unica(idPregunta=pregunta,no_secuencia=4,contenido=contenido4,determinacion=determinacion4)
+			respuesta4 = Respuesta_Unica(idpregunta=pregunta,no_secuencia=4,contenido=contenido4,determinacion=determinacion4)
 			respuesta4.save()
 			return render_to_response('pregunta_succes.html',locals(),context_instance=RequestContext(request))
 		else:
@@ -162,16 +306,16 @@ def add_pregunta_multiple_view(request):
 				determinacion4 = False
 
 			contenido1 = request.POST['respuesta1']
-			respuesta1 = Respuesta_Multiple(idPregunta=pregunta,no_secuencia=1,contenido=contenido1,determinacion=determinacion1)
+			respuesta1 = Respuesta_Multiple(idpregunta=pregunta,no_secuencia=1,contenido=contenido1,determinacion=determinacion1)
 			respuesta1.save()
 			contenido2 = request.POST['respuesta2']
-			respuesta2 = Respuesta_Multiple(idPregunta=pregunta,no_secuencia=2,contenido=contenido2,determinacion=determinacion2)
+			respuesta2 = Respuesta_Multiple(idpregunta=pregunta,no_secuencia=2,contenido=contenido2,determinacion=determinacion2)
 			respuesta2.save()
 			contenido3 = request.POST['respuesta3']
-			respuesta3 = Respuesta_Multiple(idPregunta=pregunta,no_secuencia=3,contenido=contenido3,determinacion=determinacion3)
+			respuesta3 = Respuesta_Multiple(idpregunta=pregunta,no_secuencia=3,contenido=contenido3,determinacion=determinacion3)
 			respuesta3.save()
 			contenido4 = request.POST['respuesta4']
-			respuesta4 = Respuesta_Multiple(idPregunta=pregunta,no_secuencia=4,contenido=contenido4,determinacion=determinacion4)
+			respuesta4 = Respuesta_Multiple(idpregunta=pregunta,no_secuencia=4,contenido=contenido4,determinacion=determinacion4)
 			respuesta4.save()
 			return render_to_response('pregunta_succes.html',locals(),context_instance=RequestContext(request))
 		else:
@@ -201,13 +345,13 @@ def add_pregunta_secuencial_view(request):
 			secuencia2 = request.POST['secuencia2']
 			secuencia3 = request.POST['secuencia3']
 			secuencia4 = request.POST['secuencia4']
-			respuesta1 = Respuesta_Secuencial(idPregunta=pregunta,no_secuencia=1,contenido=contenido1,secuencia=secuencia1)
+			respuesta1 = Respuesta_Secuencial(idpregunta=pregunta,no_secuencia=1,contenido=contenido1,secuencia=secuencia1)
 			respuesta1.save()
-			respuesta2 = Respuesta_Secuencial(idPregunta=pregunta,no_secuencia=2,contenido=contenido2,secuencia=secuencia2)
+			respuesta2 = Respuesta_Secuencial(idpregunta=pregunta,no_secuencia=2,contenido=contenido2,secuencia=secuencia2)
 			respuesta2.save()
-			respuesta3 = Respuesta_Secuencial(idPregunta=pregunta,no_secuencia=3,contenido=contenido3,secuencia=secuencia3)
+			respuesta3 = Respuesta_Secuencial(idpregunta=pregunta,no_secuencia=3,contenido=contenido3,secuencia=secuencia3)
 			respuesta3.save()
-			respuesta4 = Respuesta_Secuencial(idPregunta=pregunta,no_secuencia=4,contenido=contenido4,secuencia=secuencia4)
+			respuesta4 = Respuesta_Secuencial(idpregunta=pregunta,no_secuencia=4,contenido=contenido4,secuencia=secuencia4)
 			respuesta4.save()
 			return render_to_response('pregunta_succes.html',locals(),context_instance=RequestContext(request))
 		else:
@@ -236,7 +380,7 @@ def add_pregunta_booleana_view(request):
 			else:
 				determinacion = True
 				contenido = "falso"
-			respuesta = Respuesta_Booleana(idPregunta=pregunta,determinacion=determinacion,contenido=contenido)
+			respuesta = Respuesta_Booleana(idpregunta=pregunta,determinacion=determinacion,contenido=contenido)
 			respuesta.save()
 			return render_to_response('pregunta_succes.html',locals(),context_instance=RequestContext(request))
 		else:
@@ -277,7 +421,7 @@ def preguntas_teoricas_view(request,pagina):
 	if request.user.is_authenticated():
 		institucion = request.user
 		idInstitucion = Institucion.objects.get(user=institucion)
-		preguntas_teoricas = Pregunta.objects.filter(idInstitucion=idInstitucion)
+		preguntas_teoricas = Pregunta.objects.filter(idInstitucion=idInstitucion,categoria=1)
 		paginator = Paginator(preguntas_teoricas,4) #cantidad de preguntas por pagina
 		try:
 			page = int(pagina)
@@ -333,10 +477,10 @@ def edit_unica_view(request):
 			pregunta.tipoRespuesta = tipoRespuesta
 			pregunta.save()
 			#editar las respuestas asociadas a las preguntas
-			respuesta1 = Respuesta_Unica.objects.get(idPregunta=idpregunta,no_secuencia=1)
-			respuesta2 = Respuesta_Unica.objects.get(idPregunta=idpregunta,no_secuencia=2)
-			respuesta3 = Respuesta_Unica.objects.get(idPregunta=idpregunta,no_secuencia=3)
-			respuesta4 = Respuesta_Unica.objects.get(idPregunta=idpregunta,no_secuencia=4)
+			respuesta1 = Respuesta_Unica.objects.get(idpregunta=idpregunta,no_secuencia=1)
+			respuesta2 = Respuesta_Unica.objects.get(idpregunta=idpregunta,no_secuencia=2)
+			respuesta3 = Respuesta_Unica.objects.get(idpregunta=idpregunta,no_secuencia=3)
+			respuesta4 = Respuesta_Unica.objects.get(idpregunta=idpregunta,no_secuencia=4)
 
 			ctx = {'pregunta':pregunta,'respuesta1':respuesta1,'respuesta2':respuesta2,'respuesta3':respuesta3,'respuesta4':respuesta4}
 			return render_to_response('edit_unica_respuesta.html',ctx,context_instance=RequestContext(request))
@@ -361,7 +505,7 @@ def edit_unica_respuesta_view(request):
 			else:
 				determinacion1 = False
 			respuesta1 = Respuesta_Unica.objects.get(id=id1)
-			respuesta1.idPregunta = pregunta
+			respuesta1.idpregunta = pregunta
 			respuesta1.contenido = contenido1
 			respuesta1.no_secuencia = 1
 			respuesta1.determinacion = determinacion1
@@ -374,7 +518,7 @@ def edit_unica_respuesta_view(request):
 			else:
 				determinacion2 = False
 			respuesta2 = Respuesta_Unica.objects.get(id=id2)
-			respuesta2.idPregunta = pregunta
+			respuesta2.idpregunta = pregunta
 			respuesta2.contenido = contenido2
 			respuesta2.no_secuencia = 2
 			respuesta2.determinacion = determinacion2
@@ -388,7 +532,7 @@ def edit_unica_respuesta_view(request):
 				determinacion3 = False
 			
 			respuesta3 = Respuesta_Unica.objects.get(id=id3)
-			respuesta3.idPregunta = pregunta
+			respuesta3.idpregunta = pregunta
 			respuesta3.contenido = contenido3
 			respuesta3.no_secuencia = 3
 			respuesta3.determinacion = determinacion3
@@ -400,7 +544,7 @@ def edit_unica_respuesta_view(request):
 			else:
 				determinacion4 = False
 			respuesta4 = Respuesta_Unica.objects.get(id=id4)
-			respuesta4.idPregunta = pregunta
+			respuesta4.idpregunta = pregunta
 			respuesta4.contenido = contenido4
 			respuesta4.no_secuencia = 4
 			respuesta4.determinacion = determinacion4
@@ -431,10 +575,10 @@ def edit_multiple_view(request):
 			pregunta.tipoRespuesta = tipoRespuesta
 			pregunta.save()
 			#editar las respuestas asociadas a las preguntas
-			respuesta1 = Respuesta_Multiple.objects.get(idPregunta=idpregunta,no_secuencia=1)
-			respuesta2 = Respuesta_Multiple.objects.get(idPregunta=idpregunta,no_secuencia=2)
-			respuesta3 = Respuesta_Multiple.objects.get(idPregunta=idpregunta,no_secuencia=3)
-			respuesta4 = Respuesta_Multiple.objects.get(idPregunta=idpregunta,no_secuencia=4)
+			respuesta1 = Respuesta_Multiple.objects.get(idpregunta=idpregunta,no_secuencia=1)
+			respuesta2 = Respuesta_Multiple.objects.get(idpregunta=idpregunta,no_secuencia=2)
+			respuesta3 = Respuesta_Multiple.objects.get(idpregunta=idpregunta,no_secuencia=3)
+			respuesta4 = Respuesta_Multiple.objects.get(idpregunta=idpregunta,no_secuencia=4)
 
 			ctx = {'pregunta':pregunta,'respuesta1':respuesta1,'respuesta2':respuesta2,'respuesta3':respuesta3,'respuesta4':respuesta4}
 			return render_to_response('edit_multiple_respuesta.html',ctx,context_instance=RequestContext(request))
@@ -479,7 +623,7 @@ def edit_multiple_respuesta_view(request):
 				determinacion4 = False
 
 			respuesta1 = Respuesta_Multiple.objects.get(id=id1)
-			respuesta1.idPregunta = pregunta
+			respuesta1.idpregunta = pregunta
 			respuesta1.contenido = contenido1
 			respuesta1.no_secuencia = 1
 			respuesta1.determinacion = determinacion1
@@ -488,7 +632,7 @@ def edit_multiple_respuesta_view(request):
 			#respuesta 2
 			contenido2 = request.POST['respuesta2']
 			respuesta2 = Respuesta_Multiple.objects.get(id=id2)
-			respuesta2.idPregunta = pregunta
+			respuesta2.idpregunta = pregunta
 			respuesta2.contenido = contenido2
 			respuesta2.no_secuencia = 2
 			respuesta2.determinacion = determinacion2
@@ -497,7 +641,7 @@ def edit_multiple_respuesta_view(request):
 			#respuesta 3
 			contenido3 = request.POST['respuesta3']			
 			respuesta3 = Respuesta_Multiple.objects.get(id=id3)
-			respuesta3.idPregunta = pregunta
+			respuesta3.idpregunta = pregunta
 			respuesta3.contenido = contenido3
 			respuesta3.no_secuencia = 3
 			respuesta3.determinacion = determinacion3
@@ -505,7 +649,7 @@ def edit_multiple_respuesta_view(request):
 			
 			contenido4 = request.POST['respuesta4']
 			respuesta4 = Respuesta_Multiple.objects.get(id=id4)
-			respuesta4.idPregunta = pregunta
+			respuesta4.idpregunta = pregunta
 			respuesta4.contenido = contenido4
 			respuesta4.no_secuencia = 4
 			respuesta4.determinacion = determinacion4
@@ -536,10 +680,10 @@ def edit_secuencial_view(request):
 			pregunta.tipoRespuesta = tipoRespuesta
 			pregunta.save()
 			#editar las respuestas asociadas a las preguntas
-			respuesta1 = Respuesta_Secuencial.objects.get(idPregunta=idpregunta,no_secuencia=1)
-			respuesta2 = Respuesta_Secuencial.objects.get(idPregunta=idpregunta,no_secuencia=2)
-			respuesta3 = Respuesta_Secuencial.objects.get(idPregunta=idpregunta,no_secuencia=3)
-			respuesta4 = Respuesta_Secuencial.objects.get(idPregunta=idpregunta,no_secuencia=4)
+			respuesta1 = Respuesta_Secuencial.objects.get(idpregunta=idpregunta,no_secuencia=1)
+			respuesta2 = Respuesta_Secuencial.objects.get(idpregunta=idpregunta,no_secuencia=2)
+			respuesta3 = Respuesta_Secuencial.objects.get(idpregunta=idpregunta,no_secuencia=3)
+			respuesta4 = Respuesta_Secuencial.objects.get(idpregunta=idpregunta,no_secuencia=4)
 
 			ctx = {'pregunta':pregunta,'respuesta1':respuesta1,'respuesta2':respuesta2,'respuesta3':respuesta3,'respuesta4':respuesta4}
 			return render_to_response('edit_secuencial_respuesta.html',ctx,context_instance=RequestContext(request))
@@ -568,28 +712,28 @@ def edit_secuencial_respuesta_view(request):
 			secuencia4 = request.POST['secuencia4']
 			#respuesta1 = Respuesta_Secuencial(idPregunta=pregunta,no_secuencia=1,contenido=contenido1,secuencia=secuencia1)
 			respuesta1 = Respuesta_Secuencial(id=id1)
-			respuesta1.idPregunta = pregunta
+			respuesta1.idpregunta = pregunta
 			respuesta1.no_secuencia = 1
 			respuesta1.contenido = contenido1
 			respuesta1.secuencia = secuencia1	
 			respuesta1.save()
 			#respuesta2 = Respuesta_Secuencial(idPregunta=pregunta,no_secuencia=2,contenido=contenido2,secuencia=secuencia2)
 			respuesta2 = Respuesta_Secuencial(id=id2)
-			respuesta2.idPregunta = pregunta
+			respuesta2.idpregunta = pregunta
 			respuesta2.no_secuencia = 2
 			respuesta2.contenido = contenido2
 			respuesta2.secuencia = secuencia2
 			respuesta2.save()
 			#respuesta3 = Respuesta_Secuencial(idPregunta=pregunta,no_secuencia=3,contenido=contenido3,secuencia=secuencia3)
 			respuesta3 = Respuesta_Secuencial(id=id3)
-			respuesta3.idPregunta = pregunta
+			respuesta3.idpregunta = pregunta
 			respuesta3.no_secuencia = 3
 			respuesta3.contenido = contenido3
 			respuesta3.secuencia = secuencia3
 			respuesta3.save()
 			#respuesta4 = Respuesta_Secuencial(idPregunta=pregunta,no_secuencia=4,contenido=contenido4,secuencia=secuencia4)
 			respuesta4 = Respuesta_Secuencial(id=id4)
-			respuesta4.idPregunta = pregunta
+			respuesta4.idpregunta = pregunta
 			respuesta4.no_secuencia = 4
 			respuesta4.contenido = contenido4
 			respuesta4.secuencia = secuencia4
@@ -619,7 +763,7 @@ def edit_booleana_view(request):
 			pregunta.tipoRespuesta = tipoRespuesta
 			pregunta.save()
 			#editar las respuestas asociadas a las preguntas
-			respuesta = Respuesta_Booleana.objects.get(idPregunta=idpregunta)
+			respuesta = Respuesta_Booleana.objects.get(idpregunta=idpregunta)
 
 			ctx = {'pregunta':pregunta,'respuesta':respuesta}
 			return render_to_response('edit_booleana_respuesta.html',ctx,context_instance=RequestContext(request))
@@ -638,7 +782,7 @@ def edit_booleana_respuesta_view(request):
 			booleana = request.POST['booleana']
 			#respuesta1 = Respuesta_Secuencial(idPregunta=pregunta,no_secuencia=1,contenido=contenido1,secuencia=secuencia1)
 			respuesta = Respuesta_Booleana(id=id1)
-			respuesta.idPregunta = pregunta
+			respuesta.idpregunta = pregunta
 			if booleana == "1":
 				determinacion = True
 				contenido = "verdadero"
@@ -678,16 +822,32 @@ def logout_view(request):
 	return HttpResponseRedirect('/')
 
 @csrf_exempt
-def new_event_view(request):
-  json_data = request.read()
-  eventoObj = json.loads(json_data)
-  p_user = User.objects.get(username= eventoObj["Username"],email = eventoObj['Email'])
-  listLugar = eventoObj['lugar']
-  place = Place(address = listLugar[0], city = listLugar[1] , country = listLugar[2])
-  evento = Event(creador = p_user, nombre = eventoObj["nombre"], descripcion = eventoObj["descripcion"], fecha_realizacion = eventoObj["fecha"], hora = eventoObj["hora"], privacidad = eventoObj["privacidad"], cantidad_invitados = eventoObj["cantidadinvitados"], aprobar_asistencia = eventoObj["aprobarasistencia"], tipo = eventoObj["tipoevento"], lugar = place)
-  evento.save() 
-  #return render_to_response('index.html',locals(),  context_instance=RequestContext(request))
-  return HttpResponse("Evento creado con exitosamente")
-
 def register_player_view(request):
+	json_recibido = request.read()
+	objetoJson = json.loads(json_recibido)
+	idinstitucion = objetoJson['idinstitucion']
+	username = objetoJson['username']
+	identificacion = objetoJson['identificacion']
+	institucion = Institucion.objects.get(id=idinstitucion)
+	print idinstitucion
+	print username
+	print identificacion
+	player = Jugador(nombre=username,identificacion=identificacion,idInstitucion=institucion,puntos_totales=0,puntos_negativos=0,puntos_positivos=0)
+	player.save()
+	return HttpResponse("True")
+
+"""
+def add_images_view(request):
+	if request.user.is_authenticated():
+		if request.method == "POST":
+			for afile in request.FILES.getlist('archivo'):
+				archivo = afile
+				content_type = afile.content_type
+				imagen = Imagen(archivo=archivo,content_type=content_type,tipo=tipo)
+				imagen.save()
+			return HttpResponseRedirect('/')
+		else:
+			return render_to_response('imagenes.html',locals(),context_instance=RequestContext(request))
+"""
+
 	
