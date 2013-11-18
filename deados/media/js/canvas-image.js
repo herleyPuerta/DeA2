@@ -169,7 +169,6 @@ function save() {
         
 
     });
-    return data;
 }
         function empezar(e){
             e.dataTransfer.effectAllowed = 'move';

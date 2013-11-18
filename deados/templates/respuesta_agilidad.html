@@ -6,7 +6,7 @@
 <h4>Pregunta:</h4>
 {{pregunta.contenido}}
 
-<form method="POST" id="formId" action="." enctype="multipart/form-data" onsubmit="return save();">
+<form method="POST" id="formId" action="." enctype="multipart/form-data" onsubmit="save();">
 	{% csrf_token %}
 	<input type="hidden" id="idpregunta" name="idpregunta" value="{{pregunta.id}}" required>
 	<div class="canvas-imagenes">
