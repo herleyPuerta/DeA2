@@ -4,14 +4,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from deados.apps.home.models import Institucion, Institucion_nombre, Pregunta, Respuesta_Unica, Respuesta_Multiple, Respuesta_Secuencial, Respuesta_Booleana, Jugador, Imagen, Respuesta_Agilidad
-from deados.apps.home.forms import RegisterInstitucionForm
 from django.core.paginator import Paginator,EmptyPage,InvalidPage
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
 import json
-import base64
-#from base64 import b64decode
-from django.core.files.base import ContentFile
+
 
 def index_view(request):
 	if request.user.is_authenticated():
@@ -78,58 +75,9 @@ def add_pregunta_agilidad_view(request):
 	else:
 		return HttpResponseRedirect('/')
 
-def decode_base64(data):
-    """Decode base64, padding being optional.
-
-    :param data: Base64 data as an ASCII byte string
-    :returns: The decoded byte string.
-
-    """
-    missing_padding = 4 - len(data) % 4
-    if missing_padding:
-        data += b'='* missing_padding
-    return base64.decodestring(data)
 
 
 @csrf_exempt
-def add_respuesta_agilidad_view(request):
-	if request.user.is_authenticated():
-		if request.method == "POST":
-			idpregunta = request.POST['idpregunta']
-			imagen1 = request.FILES['imagen1']
-			#image_data = decode_base64(imagen1)
-			#image_data = base64.b64decode(imagen1)
-			idpregunta = request.POST['idpregunta']
-			pregunta = Pregunta.objects.get(id=idpregunta)
-			#imagene = ContentFile(image_data, 'imagen1.png')
-			#photo.image.save(name, ContentFile(buffer))
-			respuesta = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen1,determinacion=True,contenido="verdadero")
-			#respuesta.idpregunta=pregunta
-			#respuesta.imagen.save(image_data,ContentFile(buffer))
-			respuesta.save()
-			print "respuesta guardada"
-			#print imgdata
-			if(respuesta.save()):
-				return HttpResponseRedirect('/')
-		else:
-			return render_to_response('respuesta_agilidad.html',locals(),context_instance=RequestContext(request))
-	else:
-		return HttpResponseRedirect('/')
-
-def translate_non_alphanumerics(to_translate, translate_to=u'_'):
-    not_letters_or_digits = u'!"#%\'()*+,-./:;<=>?@[\]^_`{|}~'
-    if isinstance(to_translate, unicode):
-        translate_table = dict((ord(char), unicode(translate_to))
-                               for char in not_letters_or_digits)
-    else:
-        assert isinstance(to_translate, str)
-        translate_table = string.maketrans(not_letters_or_digits,
-                                           translate_to
-                                              *len(not_letters_or_digits))
-    return to_translate.translate(translate_table)
-
-
-"""
 def add_respuesta_agilidad_view(request):
 	if request.user.is_authenticated():
 		if request.method == "POST":
@@ -138,64 +86,85 @@ def add_respuesta_agilidad_view(request):
 			agilidad = request.POST['agilidad']
 			if agilidad == "1":
 				determinacion1 = True
-				contenido1 = "Verdadero"
+				contenido1 = "verdadero"
 			else:
 				determinacion1 = False
-				contenido1 = "Falso"
-			imagen1 = request.FILES['imagen1']
-			respuesta1 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen1,determinacion=determinacion1,contenido=contenido1)
-			respuesta1.save()
+				contenido1 = "falso"
+
 			if agilidad == "2":
 				determinacion2 = True
-				contenido2 = "Verdadero"
+				contenido2 = "verdadero"
 			else:
 				determinacion2 = False
-				contenido2 = "Falso"
-			imagen2 = request.FILES['imagen2']
-			respuesta2 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen2,determinacion=determinacion2,contenido=contenido2)
-			respuesta2.save()
+				contenido2 = "falso"
+
 			if agilidad == "3":
 				determinacion3 = True
-				contenido3 = "Verdadero"
+				contenido3 = "verdadero"
 			else:
 				determinacion3 = False
-				contenido3 = "Falso"
-			imagen3 = request.FILES['imagen3']
-			respuesta3 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen3,determinacion=determinacion3,contenido=contenido3)
-			respuesta3.save()
+				contenido3 = "falso"
+
 			if agilidad == "4":
 				determinacion4 = True
-				contenido4 = "Verdadero"
+				contenido4 = "verdadero"
 			else:
 				determinacion4 = False
-				contenido4 = "Falso"
-			imagen4 = request.FILES['imagen4']
-			respuesta4 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen4,determinacion=determinacion4,contenido=contenido4)
-			respuesta4.save()
+				contenido4 = "falso"
+
 			if agilidad == "5":
 				determinacion5 = True
-				contenido5 = "Verdadero"
+				contenido5 = "verdadero"
 			else:
 				determinacion5 = False
-				contenido5 = "Falso"
-			imagen5 = request.FILES['imagen5']
-			respuesta5 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen5,determinacion=determinacion5,contenido=contenido5)
-			respuesta5.save()
+				contenido5 = "falso"
+
 			if agilidad == "6":
 				determinacion6 = True
-				contenido6 = "Verdadero"
+				contenido6 = "verdadero"
 			else:
 				determinacion6 = False
-				contenido6 = "Falso"
+				contenido6 = "falso"
+
+			imagen1 = request.FILES['imagen1']
+			imagen1.name = "imagen1"
+
+			imagen2 = request.FILES['imagen2']
+			imagen2.name = "imagen2"
+
+			imagen3 = request.FILES['imagen3']
+			imagen3.name = "imagen3"
+			
+			imagen4 = request.FILES['imagen4']
+			imagen4.name = "imagen4"
+			imagen5 = request.FILES['imagen5']
+			imagen5.name = "imagen5"
 			imagen6 = request.FILES['imagen6']
+			imagen6.name = "imagen6"
+			respuesta1 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen1,determinacion=determinacion1,contenido=contenido1)
+			respuesta1.save()
+
+			respuesta2 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen2,determinacion=determinacion2,contenido=contenido2)
+			respuesta2.save()
+
+			respuesta3 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen3,determinacion=determinacion3,contenido=contenido3)
+			respuesta3.save()
+
+			respuesta4 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen4,determinacion=determinacion4,contenido=contenido4)
+			respuesta4.save()
+
+			respuesta5 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen5,determinacion=determinacion5,contenido=contenido5)
+			respuesta5.save()
+
 			respuesta6 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen6,determinacion=determinacion6,contenido=contenido6)
 			respuesta6.save()
-			return render_to_response('pregunta_succes.html',locals(),context_instance=RequestContext(request))
+			print "respuesta guardada"
+			return HttpResponse('True')
 		else:
 			return render_to_response('respuesta_agilidad.html',locals(),context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect('/')
-"""
+
 
 
 def add_pregunta_teoria_view(request):

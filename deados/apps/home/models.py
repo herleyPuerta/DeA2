@@ -93,7 +93,7 @@ class Respuesta_Booleana(models.Model):
 
 class Respuesta_Agilidad(models.Model):
 	def url(self,filename):
-		return "images/respuestas/agilidad/%s"%(filename)
+		return "images/respuestas/%s/%s/%s"%(self.idpregunta.id,self.idpregunta,filename)
 
 	def thumbnail(self):
 		return '<a href="/media/%s"><img src="/media/%s" width=50px heigth=50px/></a>'%(self.imagen,self.imagen)
