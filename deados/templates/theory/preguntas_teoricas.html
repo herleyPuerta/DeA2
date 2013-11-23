@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block titulo %}
+Preguntas de usario
+{% endblock titulo %}
+{% block contenido %}
+	<h3>Preguntas de {{usuario.username}}</h3>
+	{% if preguntas_teoricas %}
+		<table  class="table table-bordered">
+			<thead>
+				<tr>
+					<td><h3>Pregunta</h3></td>
+					<td><h3>Tipo de Pregunta</h3></td>
+					<td><h3>Grado</h3></td>
+				</tr>
+			</thead>
+			{% for pt in preguntas_teoricas %}
+				<tbody>
+					<tr>
+						<td>{{pt.contenido}}</td>
+						{% if pt.tipoRespuesta == 1%}
+							<td>Unica Respuesta</td>
+						{% elif pt.tipoRespuesta == 2%}
+							<td>Múltiple Respuesta</td>
+						{% elif pt.tipoRespuesta == 3%}
+							<td>Verdadero o Falso</td>
+						{% elif pt.tipoRespuesta == 4%}
+							<td>Secuencial</td>
+						{% endif %}
+						{% if pt.grado == 1 %}
+							<td>Primaria</td>
+						{% elif pt.grado == 2%}
+							<td>Sexto y septimo</td>
+						{% elif pt.grado == 3%}
+							<td>Octavo y Noveno</td>
+						{%endif%}
+						<td><a class="btn" href="/edit/pregunta/teorica/{{pt.id}}"><li class="icon-pencil"></li>Editar</a></td>
+						<td><a class="btn" href="/delete/pregunta/teorica/{{pt.id}}" onClick="return confirm('se eliminaran todos los datos asociados a la pregunta. Desea Continuar?');"><li class="icon-remove"></li>Eliminar</a></td>
+					</tr>
+				</tbody>
+			{% endfor %}
+		</table>
+	{% else %}
+		<h2>aún no has registrado preguntas</h2>
+	{% endif %}
+	{% if preguntas_teoricas %}
+		<a href="/preguntas/teoricas/page/1/"> << </a>
+		{% if preguntas_teoricas.has_previous %}
+			<a href="/preguntas/teoricas/page/{{preguntas_teoricas.previous_page_number}}">Anterior</a>
+		{% else %}
+			<a href="#">Anterior</a>
+		{% endif %}
+		{% if preguntas_teoricas.has_next %}
+			<a href="/preguntas/teoricas/page/{{preguntas_teoricas.next_page_number}}">Siguiente</a>
+		{% else %}
+			<a href="#">Siguiente</a>
+		{% endif %}
+		<a href="/preguntas/teoricas/page/{{preguntas_teoricas.paginator.num_pages }}"> >> </a>
+		<br><br><br>
+		<h4>Página {{ preguntas_teoricas.number }} de {{ preguntas_teoricas.paginator.num_pages }} </h4>
+	{% endif %}
+
+{% endblock contenido %}

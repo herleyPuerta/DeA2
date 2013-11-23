@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from base64 import b64decode
-from django.core.files.base import ContentFile
 
 class Institucion_nombre(models.Model):
 	nombre = models.CharField(max_length=100)
@@ -16,7 +14,7 @@ class Institucion(models.Model):
 		return self.user.username
 
 class Jugador(models.Model):
-	identificacion   = models.CharField(max_length=30)
+	identificacion   = models.CharField(max_length=30,unique=True)
 	nombre			 = models.CharField(max_length=90)
 	idInstitucion	 = models.ForeignKey(Institucion)
 	puntos_totales	 = models.IntegerField()
@@ -93,7 +91,7 @@ class Respuesta_Booleana(models.Model):
 
 class Respuesta_Agilidad(models.Model):
 	def url(self,filename):
-		return "images/respuestas/agilidad/%s"%(filename)
+		return "images/respuestas/%s/%s"%(self.idpregunta.id,filename)
 
 	def thumbnail(self):
 		return '<a href="/media/%s"><img src="/media/%s" width=50px heigth=50px/></a>'%(self.imagen,self.imagen)
@@ -103,7 +101,9 @@ class Respuesta_Agilidad(models.Model):
 	idpregunta 	  = models.ForeignKey(Pregunta)
 	imagen 		  = models.ImageField(upload_to=url)
 	determinacion = models.BooleanField(default=False)
-	contenido     = models.CharField(max_length=41)
+	contenido     = models.CharField(max_length=41) 
+	no_secuencia  = models.IntegerField()
+	tipo_imagen   = models.CharField(max_length=30)
 
 	def __unicode__(self):
 		return self.contenido

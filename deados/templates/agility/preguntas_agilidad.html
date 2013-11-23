@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block titulo %}
+Preguntas de usario
+{% endblock titulo %}
+{% block contenido %}
+	<h3>Preguntas de {{usuario.username}}</h3>
+	{% if preguntas_agilidad %}
+		<table  class="table table-bordered">
+			<thead>
+				<tr>
+					<td><h3>Pregunta</h3></td>
+					<td><h3>Tipo de Pregunta</h3></td>
+				</tr>
+			</thead>
+			{% for pt in preguntas_agilidad %}
+				<tbody>
+					<tr>
+						<td>{{pt.contenido}}</td>
+						<td>Agilidad Mental</td>
+						<td><a class="btn" href="/edit/pregunta/agilidad/{{pt.id}}"><li class="icon-pencil"></li>Editar</a></td>
+						<td><a class="btn" href="/delete/pregunta/agilidad/{{pt.id}}" onClick="return confirm('se eliminaran todos los datos asociados a la pregunta. Desea Continuar?');"><li class="icon-remove"></li>Eliminar</a></td>
+					</tr>
+				</tbody>
+			{% endfor %}
+		</table>
+	{% else %}
+		<h2>aún no has registrado preguntas de tipo agilidad mental</h2>
+	{% endif %}
+	{% if preguntas_agilidad %}
+		<a href="/preguntas/agilidad/page/1/"> << </a>
+		{% if preguntas_agilidad.has_previous %}
+			<a href="/preguntas/agilidad/page/{{preguntas_agilidad.previous_page_number}}">Anterior</a>
+		{% else %}
+			<a href="#">Anterior</a>
+		{% endif %}
+		{% if preguntas_agilidad.has_next %}
+			<a href="/preguntas/agilidad/page/{{preguntas_agilidad.next_page_number}}">Siguiente</a>
+		{% else %}
+			<a href="#">Siguiente</a>
+		{% endif %}
+		<a href="/preguntas/agilidad/page/{{preguntas_agilidad.paginator.num_pages }}"> >> </a>
+		<br><br><br>
+		<h4>Página {{ preguntas_agilidad.number }} de {{ preguntas_agilidad.paginator.num_pages }} </h4>
+	{% endif %}
+{% endblock contenido %}

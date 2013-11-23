@@ -57,7 +57,40 @@
 			return estaTodoOK;
 		}
 	</script>
-
+	<style>
+	.content-crafs{
+	    background: rgba(0, 100, 234, 0);
+	    -webkit-box-shadow: 0px 0px 12px rgba(58, 0, 83, 0);
+	    -moz-box-shadow:    0px 0px 12px rgba(58, 0, 83, 0);
+	    box-shadow:         0px 0px 12px rgba(58, 0, 83, 0);
+	    border-radius: 0.6em;
+	    width: 95%;
+	    padding-bottom: 20px;
+	    margin: 0.25em auto;
+	}
+	#images_container{
+	    width: 90%;
+	}
+	#canvas_container{
+	    width: 90%;
+	    background: red;
+	}
+	.answers_crafs{
+	    max-width: 1260px;
+	    padding: 0;
+	    text-align: center;
+	}
+	.canvas_container1,.canvas_container2{
+	    border-radius: 0.7em;
+	    display: inline-block;
+	    max-width: 1260px;
+	    min-height: 200px;
+	    padding: 0.25em;
+	    text-align: center;
+	    vertical-align: top;
+	    width: 45%;
+	}
+	</style>
 	{% block css 	 %}		{% endblock css 	%}
 	{% block scripts %} 	{% endblock scripts %}
 </head>
@@ -69,7 +102,7 @@
 					{% if user.is_authenticated %}
 						<li><a href="/home/">Inicio</a></li>
 						<li><a href="/preguntas/teoricas/page/1/">Preguntas Teoricas</a></li>
-						<li><a href="#">Preguntas Agilidad Mental</a></li>
+						<li><a href="/preguntas/agilidad/page/1/">Preguntas Agilidad Mental</a></li>
 						<li><a href="/logout/">Cerrar Sesion</a></li>
 					{% else %}
 						<h1>Bienvenido a la aplicacion DeA2</h1>

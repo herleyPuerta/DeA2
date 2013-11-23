@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Registro Satisfactorio{% endblock title %}
+{% block contenido %}
+<form method="POST" action="." enctype="multipart/form-data">
+	{% csrf_token %}
+	<select name="tipo">
+		<option value="1">Dados</option>
+		<option value="2">Figuras Geometricas</option>
+		<option value="3">Objetos Generales</option>
+	</select>
+	<br>
+	<input type="file" name="archivo" multiple>
+	<br>
+	<input type="submit" value="guardar">
+</form>
+{% endblock contenido %}

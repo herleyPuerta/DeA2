@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+Editar Pregunta Teorica
+{% endblock title %}
+{% block contenido %}
+
+<form action="/edit_pregunta_booleana/" method="POST">
+	{% csrf_token %}
+	<input type="hidden" name="id" value="{{pregunta.id}}" required>
+	<br>
+	<h4>el grado actual es:</h4>
+	<br>
+	<h5>{{grados}}</h5>
+	<br>
+	<h4>Seleccione el nuevo grado:</h4>
+	<br>
+	<select name="grado">
+		<option value="1" selected>Primaria</option>
+		<option value="2">Sexto y Séptimo</option>
+		<option value="3">Octavo y noveno</option>
+	</select>
+	<br><br>
+	<h4>Editar la Pregunta:</h4>
+	<br>
+	<textarea name="contenido" onKeyDown="textCounter(this.form.contenido,this.form.remLen,60);" onKeyUp="textCounter(this.form.contenido,this.form.remLen,60);" required>{{pregunta.contenido}}</textarea>
+	<br>
+	<input readonly class="count" type=text name=remLen size=3 maxlength=3 value="60" style="width:12px;height:10px;font-size:0.8em"><br><br>
+	<input type="submit" name="action" class="btn btn-primary" value="Editar Respuestas">
+	<input type="submit" name="action" class="btn btn-primary" value="Guardar">
+</form>
+{% endblock contenido %}

@@ -12,11 +12,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', #postgresql_psycopg2
         'NAME': 'deados_db3',
-        'USER': 'deados3',
-        'PASSWORD': 'deados3',
-        'HOST': 'localhost',                      
+        'USER': 'deados3',#deados3
+        'PASSWORD': 'deados3',#deados3
+        'HOST': 'localhost',#localhost                   
         'PORT': '',
     }
 }
@@ -80,6 +80,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'deados.apps.home',
+    'deados.apps.agility',
+    'deados.apps.theory',
     'deados.apps.webServices.wsPreguntas',
 )
 

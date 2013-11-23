@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block title %}
+Editar Respuesta de Agilidad Mental con imágenes de dados
+{% endblock title %}
+{% block contenido %}
+<div class="content-crafs">
+    <h3>Pregunta</h3>
+    {{pregunta.contenido}}
+    <div class="images_container_crafs">
+        <h4>Imagenes De Dados</h4>
+        {% if  imagenes_dados %}
+            {% for imagend in imagenes_dados %}
+            <img src="/media/{{imagend.archivo}}" id="{{imagend.id}}" draggable="true" ondragstart="return empezar(event)" ondragend="return end(event)" width="60px" height="60px">
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="answers_crafs">
+        <div class="canvas_container1">
+            <h4>Respuesta 1:</h4>
+            <canvas id="canvas1" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop_edit(event,1)"></canvas>
+            <br>
+            {% if respuesta1.contenido == "verdadero" %}
+                <input type="radio" name="agilidad" value="1" checked />
+            {% else %}
+                <input type="radio" name="agilidad" value="1">
+            {% endif %}
+            <input type="button" id="clear" class="btn btn-inverse" value="limpiar" onclick="limpiar_edit(1)">
+            <h4>Respuesta 2:</h4>
+            <canvas id="canvas2" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop_edit(event,2)"></canvas>
+            <br>
+            {% if respuesta2.contenido == "verdadero" %}
+                <input type="radio" name="agilidad" value="2" checked />
+            {% else %}
+                <input type="radio" name="agilidad" value="2">
+            {% endif %}
+            <input type="button" id="clear" class="btn btn-inverse" value="limpiar" onclick="limpiar_edit(2)">
+            <h4>Respuesta 3:</h4>
+            <canvas id="canvas3" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop_edit(event,3)"></canvas>
+            <br>
+            {% if respuesta3.contenido == "verdadero" %}
+                <input type="radio" name="agilidad" value="3" checked />
+            {% else %}
+                <input type="radio" name="agilidad" value="3">
+            {% endif %}
+            <input type="button" id="clear" class="btn btn-inverse"  value="limpiar" onclick="limpiar_edit(3)">
+        </div>
+        <div class="canvas_container2">
+            <h4>Respuesta 4:</h4>
+            <canvas id="canvas4" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop_edit(event,4)"></canvas>
+            <br>
+            {% if respuesta4.contenido == "verdadero" %}
+                <input type="radio" name="agilidad" value="4" checked />
+            {% else %}
+                <input type="radio" name="agilidad" value="4">
+            {% endif %}
+            <input type="button" id="clear" class="btn btn-inverse" value="limpiar" onclick="limpiar_edit(4)">
+            <h4>Respuesta 5:</h4>
+            <canvas id="canvas5" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop_edit(event,5)"></canvas>
+            <br>
+            {% if respuesta5.contenido == "verdadero" %}
+                <input type="radio" name="agilidad" value="5" checked />
+            {% else %}
+                <input type="radio" name="agilidad" value="5">
+            {% endif %}
+            <input type="button" id="clear" class="btn btn-inverse" value="limpiar" onclick="limpiar_edit(5)">
+            <h4>Respuesta 6:</h4>
+            <canvas id="canvas6" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop_edit(event,6)"></canvas>
+            <br>
+            {% if respuesta6.contenido == "verdadero" %}
+                <input type="radio" name="agilidad" value="6" checked />
+            {% else %}
+                <input type="radio" name="agilidad" value="6">
+            {% endif %}
+            <input type="button" id="clear" class="btn btn-inverse" value="limpiar" onclick="limpiar_edit(6)">
+        </div>
+    </div>
+</div>
+<input type="hidden" value="{{pregunta.id}}" id="idpregunta">
+<input type="hidden" value="{{respuesta1.id}}" id="id1">
+<input type="hidden" value="{{respuesta2.id}}" id="id2">
+<input type="hidden" value="{{respuesta3.id}}" id="id3">
+<input type="hidden" value="{{respuesta4.id}}" id="id4">
+<input type="hidden" value="{{respuesta5.id}}" id="id5">
+<input type="hidden" value="{{respuesta6.id}}" id="id6">
+<input type="button" value="Guardar Pregunta" class="btn btn-primary" onclick="save_edit(1)">
+
+<img src="/media/{{respuesta1.imagen}}" id="imagen1" style="display:none;">
+<img src="/media/{{respuesta2.imagen}}" id="imagen2" style="display:none;">
+<img src="/media/{{respuesta3.imagen}}" id="imagen3" style="display:none;">
+<img src="/media/{{respuesta4.imagen}}" id="imagen4" style="display:none;">
+<img src="/media/{{respuesta5.imagen}}" id="imagen5" style="display:none;">
+<img src="/media/{{respuesta6.imagen}}" id="imagen6" style="display:none;">
+
+<script>
+window.onload=function(){
+    var canvas1=document.getElementById("canvas1");
+    var ctx1=canvas1.getContext("2d");
+    var img1=document.getElementById("imagen1");
+    ctx1.drawImage(img1,0,0);
+
+    var canvas2=document.getElementById("canvas2");
+    var ctx2=canvas2.getContext("2d");
+    var img2=document.getElementById("imagen2");
+    ctx2.drawImage(img2,0,0);
+
+    var canvas3=document.getElementById("canvas3");
+    var ctx3=canvas3.getContext("2d");
+    var img3=document.getElementById("imagen3");
+    ctx3.drawImage(img3,0,0);
+
+    var canvas4=document.getElementById("canvas4");
+    var ctx4=canvas4.getContext("2d");
+    var img4=document.getElementById("imagen4");
+    ctx4.drawImage(img4,0,0);
+
+    var canvas5=document.getElementById("canvas5");
+    var ctx5=canvas5.getContext("2d");
+    var img5=document.getElementById("imagen5");
+    ctx5.drawImage(img5,0,0);
+
+    var canvas6=document.getElementById("canvas6");
+    var ctx6=canvas6.getContext("2d");
+    var img6=document.getElementById("imagen6");
+    ctx6.drawImage(img6,0,0);
+};
+</script>
+{% endblock contenido %}

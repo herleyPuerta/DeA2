@@ -1,3 +1,4 @@
+ DROP TABLE public.agility_imagen CASCADE;
  DROP TABLE public.auth_group CASCADE;
  DROP TABLE public.auth_group_permissions CASCADE;
  DROP TABLE public.auth_permission CASCADE;

@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+    <title>Ingresar Pregrunta de agilidad mental con objetos</title>
+    <style type="text/css">
+    .content-crafs{
+        background: rgba(0, 100, 234, 0);
+        -webkit-box-shadow: 0px 0px 12px rgba(58, 0, 83, 0);
+        -moz-box-shadow:    0px 0px 12px rgba(58, 0, 83, 0);
+        box-shadow:         0px 0px 12px rgba(58, 0, 83, 0);
+        border-radius: 0.6em;
+        width: 95%;
+        margin:0.1em auto;
+        padding-bottom: 20px;
+    }
+    #images_container{
+        width: 90%;
+    }
+    #canvas_container{
+        width: 90%;
+        background: red;
+    }
+    #c1,#c2,#c3,#c4{
+        border:1px solid black;
+    }
+    .answers_crafs{
+        max-width: 1260px;
+        padding: 0;
+        text-align: center;
+    }
+    .canvas_container1,.canvas_container2{
+        border-radius: 0.7em;
+        display: inline-block;
+        max-width: 1260px;
+        min-height: 200px;
+        padding: 0.25em;
+        text-align: center;
+        vertical-align: top;
+        width: 45%;
+    }
+
+    .images_container_crafs{
+        border:4px solid rgba(0, 0, 71, 0.7);
+    }
+
+    </style>
+</head>
+<body>
+<div class="content-crafs">
+    <div class="text-question-crafs">
+        <h3>Datos de la pregunta de agilidad mental con preguntas de objetos</h3>
+        <form method="POST" action=".">
+            {% csrf_token %}
+            <h5>Seleccione el Grado de la pregunta:</h5>
+            <select name="grado" class="select" id="select-agility" value="grado">
+                <option value="1">Primaria</option>
+                <option value="2">Sexto y Séptimo</option>
+                <option value="3">Octavo y Noveno</option>
+            </select>
+            <h5>Ingrese la pregunta:</h5>
+            <textarea name="pregunta" class="text-question" onkeyDown="textCounter(this.form.pregunta,this.form.remlen,60);" onKeyUp="textCounter(this.form.pregunta,this.form.remlen,60);" id="textarea-agility" required></textarea>
+            <br>
+            <input readonly type="text" name="remlen" value="60" style="width:12px;height:10px;font-size:0.8em">
+        </form>
+    </div>
+    <div class="images_container_crafs">
+        <h4>Imagenes De Figuras de Objetos</h4>
+        {% if  imagenes_objetos %}
+            {% for imageno in imagenes_objetos %}
+            <img src="/media/{{imageno.archivo}}" id="{{imageno.id}}" draggable="true" ondragstart="return empezar(event)" ondragend="return end(event)" width="40px" height="40px">
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="answers_crafs">
+        <div class="canvas_container1">
+            <h5>respuesta 1</h5>
+            <canvas id="canvas1" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop1(event)"></canvas>
+            <br>
+            <input type="radio" name="agilidad" value="1" checked />
+            <input type="button" class="btn btn-inverse" value="borrar" onclick="limpiar1()">
+            <h5>respuesta 2</h5>
+            <canvas id="canvas2" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop2(event)"></canvas>
+            <br>
+            <input type="radio" name="agilidad" value="2">
+            <input type="button" class="btn btn-inverse" value="borrar" onclick="limpiar2()">
+            <h5>respuesta 3</h5>
+            <canvas id="canvas3" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop3(event)"></canvas>
+            <br>
+            <input type="radio" name="agilidad" value="3">
+            <input type="button" class="btn btn-inverse" value="borrar" onclick="limpiar3()">
+        </div>
+        <div class="canvas_container2">
+            <h5>respuesta 4</h5>
+            <canvas id="canvas4" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop4(event)"></canvas>
+            <br>
+            <input type="radio" name="agilidad" value="4">
+            <input type="button" class="btn btn-inverse" id="clear" value="borrar" onclick="limpiar4()">
+            <h5>respuesta 5</h5>
+            <canvas id="canvas5" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop5(event)"></canvas>
+            <br>
+            <input type="radio" name="agilidad" value="5">
+            <input type="button" class="btn btn-inverse" id="clear" value="borrar" onclick="limpiar5()">
+            <h5>respuesta 6</h5>
+            <canvas id="canvas6" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop6(event)"></canvas>
+            <br>
+            <input type="radio" name="agilidad" value="6">
+            <input type="button" class="btn btn-inverse" id="clear" value="borrar" onclick="limpiar6()">
+        </div>
+            <a class="btn btn-primary" href="javascript:save(3);">Guardar Pregunta</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
