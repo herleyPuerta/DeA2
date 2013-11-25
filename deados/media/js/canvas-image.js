@@ -85,7 +85,7 @@ function save(tipo_imagen) {
     edit.append("imagen_edit_type", imagen_edit_type);
 
     if(cont1<6 || cont2<6 || cont3<6 || cont4<6 || cont5<6 || cont6<6){
-        alert("cada respuesta debe contener 6 imagenes save");
+        alert("cada respuesta debe contener 6 imagenes");
     }else if(pregunta == ""){
         alert("la pregunta no puede estar vacia");
     } else{
@@ -98,7 +98,7 @@ function save(tipo_imagen) {
                 contentType: false,
                 data: fd,
                 success: function(){
-                    window.location = '/question_success/';
+                    window.location = '/question_success_agility/';
                 }
                  //$("#formId").submit();
             });
@@ -111,7 +111,7 @@ function save(tipo_imagen) {
                 contentType: false,
                 data: fd,
                 success: function(){
-                    window.location = '/question_success/';
+                    window.location = '/question_success_agility/';
                 }
                 //$("#formId").submit();
             });
@@ -124,7 +124,7 @@ function save(tipo_imagen) {
                 contentType: false,
                 data: fd,
                 success: function(){
-                    window.location = '/question_success/';
+                    window.location = '/question_success_agility/';
                 }
                 //$("#formId").submit();
             });
@@ -194,8 +194,8 @@ function save_edit(numero){
     edit.append("id4", id4);
     edit.append("id5", id5);
     edit.append("id6", id6);
-    if(limpio1 == 1 && cont_edit1 == 0 || limpio2 == 1 && cont_edit2 == 0 || limpio3 == 1 && cont_edit3 == 0 || limpio4 == 1 && cont_edit4 == 0 || limpio5 == 1 && cont_edit5 == 0 || limpio6 == 1 && cont_edit6 == 0){
-        alert("las respuestas no pueden estar vacias");
+    if(limpio1 == 1 && cont_edit1 < 6 || limpio2 == 1 && cont_edit2 < 6 || limpio3 == 1 && cont_edit3 < 6 || limpio4 == 1 && cont_edit4 < 6 || limpio5 == 1 && cont_edit5 < 6 || limpio6 == 1 && cont_edit6 < 6){
+        alert("las respuestas deben tener 6 imagenes");
     }else{
         if(numero == 1){
             $.ajax({
@@ -206,7 +206,7 @@ function save_edit(numero){
                 contentType: false,
                 data: edit,
                 success: function(){
-                    window.location = '/question_success/';
+                    window.location = '/question_success_agility/';
                 }
             });
         }else if(numero == 2){
@@ -218,7 +218,7 @@ function save_edit(numero){
                 contentType: false,
                 data: edit,
                 success: function(){
-                    window.location = '/question_success/';
+                    window.location = '/question_success_agility/';
                 }
             });
         }else if(numero == 3){
@@ -230,7 +230,7 @@ function save_edit(numero){
                 contentType: false,
                 data: edit,
                 success: function(){
-                    window.location = '/question_success/';
+                    window.location = '/question_success_agility/';
                 }
             });
         }
@@ -569,56 +569,56 @@ function limpiar_edit(numero) {
     }
 }
 
-cont_edit1 = 0
-cont_edit2 = 0
-cont_edit3 = 0
-cont_edit4 = 0
-cont_edit5 = 0
-cont_edit6 = 0
+cont_edit1 = 1
+cont_edit2 = 1
+cont_edit3 = 1
+cont_edit4 = 1
+cont_edit5 = 1
+cont_edit6 = 1
 
 function drop_edit(e,numero){
-    mensaje = "primero limpia las imagenes";
+    mensaje = "Primero limpia la imágen";
     if(numero == 1){
         if (limpio1 == 0){
             alert(mensaje);
         }else{
             drop1(e);
-            cont_edit1 = 1;
+            cont_edit1 += 1;
         }
     }else if(numero == 2){
         if (limpio2 == 0){
             alert(mensaje);
         }else{
             drop2(e);
-            cont_edit2 = 1
+            cont_edit2 += 1
         }
     }else if(numero == 3){
         if (limpio3 == 0){
             alert(mensaje);
         }else{
             drop3(e);
-            cont_edit3 = 1
+            cont_edit3 += 1
         }
     }else if(numero == 4){
         if (limpio4 == 0){
             alert(mensaje);
         }else{
             drop4(e);
-            cont_edit4 = 1
+            cont_edit4 += 1
         }
     }else if(numero == 5){
         if (limpio5 == 0){
             alert(mensaje);
         }else{
             drop5(e);
-            cont_edit5 = 1
+            cont_edit5 += 1
         }
     }else if(numero == 6){
         if (limpio6 == 0){
             alert(mensaje);
         }else{
             drop6(e);
-            cont_edit6 = 1
+            cont_edit6 += 1
         }
     }
 return false;

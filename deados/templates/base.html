@@ -14,85 +14,8 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="/media/js/jquery.js"></script>
 	<script src="/media/bootstrap/js/bootstrap.js"></script>
-	<script src="/media/js/canvas-image.js">
-	</script>
-	<script>
-		function textCounter(field, countfield, maxlimit) {
-			if (field.value.length > maxlimit)
-				field.value = field.value.substring(0, maxlimit);
-			else 
-				countfield.value = maxlimit - field.value.length;
-		}
-		function textCounterSec(field,maxlimit){
-			if (field.value.length > maxlimit) 
-				field.value = field.value.substring(0,maxlimit);
-		}
-		function validar() {
-			var estaTodoOK = true;
-
-			if (document.getElementById("secuencia1").value>4 || document.getElementById("secuencia1").value<1 ||  isNaN(document.getElementById("secuencia1").value)) {
-					estaTodoOK = false;	
-			}	
-			if (document.getElementById("secuencia2").value>4 || document.getElementById("secuencia2").value<1 || isNaN(document.getElementById("secuencia2").value)) {
-					estaTodoOK = false;	
-			}
-			if (document.getElementById("secuencia3").value>4 || document.getElementById("secuencia3").value<1 || isNaN(document.getElementById("secuencia3").value)) {
-					estaTodoOK = false;	
-			}
-			if (document.getElementById("secuencia4").value>4 || document.getElementById("secuencia4").value<1 || isNaN(document.getElementById("secuencia4").value)) {
-					estaTodoOK = false;	
-			}
-			var sec1 = document.getElementById("secuencia1").value;
-			var sec2 = document.getElementById("secuencia2").value;
-			var sec3 = document.getElementById("secuencia3").value;
-			var sec4 = document.getElementById("secuencia4").value;
-
-			if (sec1 == sec2 || sec1 == sec3 || sec1 == sec4 || sec2 == sec3 || sec2 == sec4 || sec3 == sec4){
-				estaTodoOK = false;
-			}
-
-			if (!estaTodoOK) {
-				alert("Los numeros de secuencia: \n  * deben ser entre 1 y 4 \n  * no pueden ser letras \n  * no pueden estar repetidos!");	
-			}
-			return estaTodoOK;
-		}
-	</script>
-	<style>
-	.content-crafs{
-	    background: rgba(0, 100, 234, 0);
-	    -webkit-box-shadow: 0px 0px 12px rgba(58, 0, 83, 0);
-	    -moz-box-shadow:    0px 0px 12px rgba(58, 0, 83, 0);
-	    box-shadow:         0px 0px 12px rgba(58, 0, 83, 0);
-	    border-radius: 0.6em;
-	    width: 95%;
-	    padding-bottom: 20px;
-	    margin: 0.25em auto;
-	}
-	#images_container{
-	    width: 90%;
-	}
-	#canvas_container{
-	    width: 90%;
-	    background: red;
-	}
-	.answers_crafs{
-	    max-width: 1260px;
-	    padding: 0;
-	    text-align: center;
-	}
-	.canvas_container1,.canvas_container2{
-	    border-radius: 0.7em;
-	    display: inline-block;
-	    max-width: 1260px;
-	    min-height: 200px;
-	    padding: 0.25em;
-	    text-align: center;
-	    vertical-align: top;
-	    width: 45%;
-	}
-	</style>
-	{% block css 	 %}		{% endblock css 	%}
-	{% block scripts %} 	{% endblock scripts %}
+	<script src="/media/js/canvas-image.js"></script>
+	<script src="/media/js/validation.js"></script>
 </head>
 <body>
 	<div id="contenedor">
@@ -115,7 +38,6 @@
 		{% endblock contenido %}
 		</div>
 		</div>
-
 		<footer class="footer">
 		</footer>
 	</div>

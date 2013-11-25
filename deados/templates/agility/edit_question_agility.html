@@ -5,16 +5,21 @@ Editar Pregunta de Agilidad Mental
 {% block contenido %}
 <form action="." method="POST">
 	{% csrf_token %}
-	<h4>el grado actual es:</h4>
-	<br>
-	<h5>{{grados}}</h5>
-	<br>
-	<h4>Seleccione el nuevo grado:</h4>
-	<br>
+	<h4>Grado:</h4>
 	<select name="grado">
-		<option value="1" selected>Primaria</option>
-		<option value="2">Sexto y Séptimo</option>
-		<option value="3">Octavo y noveno</option>
+		{% if pregunta.grado == 1 %}
+			<option value="1" selected>Primaria</option>
+			<option value="2">Sexto y Séptimo</option>
+			<option value="3">Octavo y Noveno</option>
+		{% elif pregunta.grado == 2 %}
+			<option value="1">Primaria</option>
+			<option value="2" selected>Sexto y Séptimo</option>
+			<option value="3">Octavo y Noveno</option>
+		{% elif pregunta.grado == 3 %}
+			<option value="1">Primaria</option>
+			<option value="2">Sexto y Séptimo</option>
+			<option value="3" selected>Octavo y Noveno</option>
+		{% endif %}
 	</select>
 	<br><br>
 	<h4>Editar la Pregunta:</h4>

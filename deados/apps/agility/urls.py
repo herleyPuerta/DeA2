@@ -9,9 +9,10 @@ urlpatterns = patterns('deados.apps.agility.views',
 	url(r'^preguntas/agilidad/page/(?P<pagina>.*)/$', 'preguntas_agilidad_view', name='vistaPreguntasAgilidad'),
 	#url(r'^edit_pregunta_agilidad/$', 'edit_agilidad_view', name='vistaEditAgilidadPregunta'),
 	url(r'^edit/pregunta/agilidad/(?P<id_pregunta>.*)/$','edit_agilidad_view',name='vista_edit_agilidad'),
-	url(r'^edit/respuesta/agilidad/$', 'edit_agilidad_respuesta_view', name='vista_edit_respuesta_agilidad'),
 	url(r'^edit/respuesta/agilidad/dados/$', 'edit_agilidad_respuesta_dados_view', name='vista_edit_respuesta_agilidad_dados'),
 	url(r'^edit/respuesta/agilidad/geometricas/$', 'edit_agilidad_respuesta_geometricas_view', name='vista_edit_respuesta_agilidad_geometricas'),
 	url(r'^edit/respuesta/agilidad/objetos/$', 'edit_agilidad_respuesta_objetos_view', name='vista_edit_respuesta_agilidad_objetos'),
 	url(r'^delete/pregunta/agilidad/(?P<id_pregunta>.*)/$', 'delete_agilidad_pregunta_view', name='vista_delete_pregunta_agilidad'),
+
+	url(r'^question_success_agility/$', 'question_success_agility_view', name='vista_pregunta_guardada'),
 )

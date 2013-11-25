@@ -4,24 +4,7 @@ Pregunta de agilidad mental
 {% endblock title %}
 {% block contenido %}
 <script>
-/*
-function options() {
-	var e = document.getElementById("option_selected");
-	var option = e.options[e.selectedIndex].value;
-	if(option == 1){
-		$('#content_to_pop').load('/register_question_crafs_agility/');
-	}else if(option == 2){
-		$('#content_to_pop').load('/register_question_geometrics_agility/');
-	}else if(option == 3){
-		$('#content_to_pop').load('/register_question_objects_agility/');
-	}else{
-		alert("elija una opcion válida");
-	}
-}*/
-
 function option_selected(sel) {
-	//var e = document.getElementById("option_selected");
-	//var option = e.options[e.selectedIndex].value;
 	var option = sel.options[sel.selectedIndex].value;
 	if(option == 1){
 		$('#content_to_pop').load('/register_question_crafs_agility/');

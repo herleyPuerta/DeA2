@@ -29,6 +29,8 @@ def preguntas_teoricas_view(request,pagina):
 def question_success_view(request):
 	if request.user.is_authenticated():
 		return render_to_response('question_success.html',locals(),context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/')
 
 
 def add_pregunta_teoria_view(request):

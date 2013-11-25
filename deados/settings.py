@@ -12,11 +12,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', #postgresql_psycopg2
-        'NAME': 'deados_db3',
-        'USER': 'deados3',#deados3
-        'PASSWORD': 'deados3',#deados3
-        'HOST': 'localhost',#localhost                   
+        'ENGINE': 'django.db.backends.mysql', #postgresql_psycopg2
+        'NAME': 'prueba',#deados_db3
+        'USER': 'root',#deados3
+        'PASSWORD': 'root',#deados3
+        'HOST': '',#localhost                   
         'PORT': '',
     }
 }

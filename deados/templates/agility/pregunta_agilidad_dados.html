@@ -1,45 +1,9 @@
 <!doctype html>
 <html>
 <head>
-    <script src="/media/js/canvas-image.js/"></script>
     <title>Ingresar Pregrunta de agilidad mental con dados</title>
-    <style>
-    .content-crafs{
-        background: rgba(0, 100, 234, 0);
-        -webkit-box-shadow: 0px 0px 12px rgba(58, 0, 83, 0);
-        -moz-box-shadow:    0px 0px 12px rgba(58, 0, 83, 0);
-        box-shadow:         0px 0px 12px rgba(58, 0, 83, 0);
-        border-radius: 0.6em;
-        width: 95%;
-        margin:0.1em auto;
-        padding-bottom: 20px;
-    }
-    #images_container{
-        width: 90%;
-    }
-    #canvas_container{
-        width: 90%;
-        background: red;
-    }
-    .answers_crafs{
-        max-width: 1260px;
-        padding: 0;
-        text-align: center;
-    }
-    .images_container_crafs{
-        border:4px solid rgba(0, 0, 71, 0.7);
-    }
-    .canvas_container1,.canvas_container2{
-        border-radius: 0.7em;
-        display: inline-block;
-        max-width: 1260px;
-        min-height: 200px;
-        padding: 0.25em;
-        text-align: center;
-        vertical-align: top;
-        width: 45%;
-    }
-    </style>
+    <script src="/media/js/canvas-image.js/"></script>
+    <style src="/media/css/style.css/"></style>
 </head>
 <body>
 <div class="content-crafs">
@@ -60,7 +24,7 @@
         </form>
     </div>
     <div class="images_container_crafs">
-        <h4>Imagenes De Dados</h4>
+        <h4>Imágenes De Dados</h4>
         {% if  imagenes_dados %}
             {% for imagend in imagenes_dados %}
             <img src="/media/{{imagend.archivo}}" id="{{imagend.id}}" draggable="true" ondragstart="return empezar(event)" ondragend="return end(event)" width="40px" height="40px">
@@ -69,34 +33,34 @@
     </div>
     <div class="answers_crafs">
         <div class="canvas_container1">
-            <h5>respuesta 1</h5>
+            <h5>Respuesta 1</h5>
             <canvas id="canvas1" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop1(event)"></canvas>
             <br>
             <input type="radio" name="agilidad" value="1" checked />
             <input type="button" class="btn btn-inverse" value="borrar" onclick="limpiar1()">
-            <h5>respuesta 2</h5>
+            <h5>Respuesta 2</h5>
             <canvas id="canvas2" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop2(event)"></canvas>
             <br>
             <input type="radio" name="agilidad" value="2">
             <input type="button" class="btn btn-inverse" value="borrar" onclick="limpiar2()">
-            <h5>respuesta 3</h5>
+            <h5>Respuesta 3</h5>
             <canvas id="canvas3" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop3(event)"></canvas>
             <br>
             <input type="radio" name="agilidad" value="3">
             <input type="button" class="btn btn-inverse" value="borrar" onclick="limpiar3()">
         </div>
         <div class="canvas_container2">
-            <h5>respuesta 4</h5>
+            <h5>Respuesta 4</h5>
             <canvas id="canvas4" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop4(event)"></canvas>
             <br>
             <input type="radio" name="agilidad" value="4">
             <input type="button" class="btn btn-inverse" id="clear" value="borrar" onclick="limpiar4()">
-            <h5>respuesta 5</h5>
+            <h5>Respuesta 5</h5>
             <canvas id="canvas5" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop5(event)"></canvas>
             <br>
             <input type="radio" name="agilidad" value="5">
             <input type="button"  class="btn btn-inverse" id="clear" value="borrar" onclick="limpiar5()">
-            <h5>respuesta 6</h5>
+            <h5>Respuesta 6</h5>
             <canvas id="canvas6" ondragenter="return enter(event)" ondragover="return over(event)" ondrop="return drop6(event)"></canvas>
             <br>
             <input type="radio" name="agilidad" value="6">

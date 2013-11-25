@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator,EmptyPage,InvalidPage
 from django.views.decorators.csrf import csrf_exempt
 
+
 def preguntas_agilidad_view(request,pagina):
 	if request.user.is_authenticated():
 		institucion = request.user
@@ -24,11 +25,13 @@ def preguntas_agilidad_view(request,pagina):
 	else:
 		return HttpResponseRedirect('/')
 
+
 def new_questions_agility_view(request):
 	if request.user.is_authenticated():
 		return render_to_response('agility/new_question_agility.html',locals(),context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect('/')
+
 
 @csrf_exempt
 def add_pregunta_agilidad_dados_view(request):
@@ -535,6 +538,8 @@ def edit_agilidad_respuesta_dados_view(request):
 			return HttpResponse('Respuesta guardada')
 		else:
 			return render_to_response('agility/edit_answer_agility_crafs.html',locals(),context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/')
 
 
 @csrf_exempt
@@ -671,6 +676,8 @@ def edit_agilidad_respuesta_geometricas_view(request):
 			return HttpResponse('Respuesta guardada')
 		else:
 			return render_to_response('agility/edit_answer_agility_geometrics.html',locals(),context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/')
 
 
 @csrf_exempt
@@ -807,166 +814,24 @@ def edit_agilidad_respuesta_objetos_view(request):
 			return HttpResponse('Respuesta guardada')
 		else:
 			return render_to_response('agility/edit_answer_agility_geometrics.html',locals(),context_instance=RequestContext(request))
-
-
-
-
-@csrf_exempt
-def edit_agilidad_respuesta_view(request):
-	if request.user.is_authenticated():
-		dados = 0
-		geometricas = 0
-		objetos = 0 
-		if request.method == "POST":
-			idpregunta = request.POST['idpregunta']
-			pregunta = Pregunta.objects.get(id=idpregunta)
-			imagen_edit_type = request.POST['imagen_edit_type']
-			if imagen_edit_type == "crafs":
-				tipo_imagen = "Dados"
-				dados = 1
-			elif imagen_edit_type == "geometrics":
-				tipo_imagen = "geometricas"
-				geometricas = 1
-			else:
-				tipo_imagen = "objetos"
-				objetos = 1
-			agilidad = request.POST['agilidad']
-			if agilidad == "1":
-				determinacion1 = True
-				contenido1 = "verdadero"
-			else:
-				determinacion1 = False
-				contenido1 = "falso"
-
-			if agilidad == "2":
-				determinacion2 = True
-				contenido2 = "verdadero"
-			else:
-				determinacion2 = False
-				contenido2 = "falso"
-
-			if agilidad == "3":
-				determinacion3 = True
-				contenido3 = "verdadero"
-			else:
-				determinacion3 = False
-				contenido3 = "falso"
-
-			if agilidad == "4":
-				determinacion4 = True
-				contenido4 = "verdadero"
-			else:
-				determinacion4 = False
-				contenido4 = "falso"
-
-			if agilidad == "5":
-				determinacion5 = True
-				contenido5 = "verdadero"
-			else:
-				determinacion5 = False
-				contenido5 = "falso"
-
-			if agilidad == "6":
-				determinacion6 = True
-				contenido6 = "verdadero"
-			else:
-				determinacion6 = False
-				contenido6 = "falso"
-
-			imagen1 = request.FILES['imagen1']
-			imagen1.name = "imagen1"
-
-			imagen2 = request.FILES['imagen2']
-			imagen2.name = "imagen2"
-
-			imagen3 = request.FILES['imagen3']
-			imagen3.name = "imagen3"
-			
-			imagen4 = request.FILES['imagen4']
-			imagen4.name = "imagen4"
-
-			imagen5 = request.FILES['imagen5']
-			imagen5.name = "imagen5"
-
-			imagen6 = request.FILES['imagen6']
-			imagen6.name = "imagen6"
-			
-			#respuesta1 = Respuesta_Agilidad(idpregunta=pregunta,imagen=imagen1,determinacion=determinacion1,contenido=contenido1,no_secuencia=1)
-
-			respuesta1 = Respuesta_Agilidad.objects.get(id=id1)
-			respuesta1.idpregunta = pregunta
-			respuesta1.imagen = imagen1
-			respuesta1.determinacion = determinacion1
-			respuesta1.contenido = contenido1
-			respuesta1.no_secuencia = 1
-			respuesta1.tipo_imagen = tipo_imagen
-			respuesta1.save()
-
-			respuesta2 = Respuesta_Agilidad.objects.get(id=id2)
-			respuesta2.idpregunta = pregunta
-			respuesta2.imagen = imagen2
-			respuesta2.determinacion = determinacion2
-			respuesta2.contenido = contenido2
-			respuesta2.no_secuencia = 2
-			respuesta2.tipo_imagen = tipo_imagen
-			respuesta2.save()
-
-
-			respuesta3 = Respuesta_Agilidad.objects.get(id=id3)
-			respuesta3.idpregunta = pregunta
-			respuesta3.imagen = imagen3
-			respuesta3.determinacion = determinacion3
-			respuesta3.contenido = contenido3
-			respuesta3.no_secuencia = 3
-			respuesta3.tipo_imagen = tipo_imagen
-			respuesta3.save()
-
-
-			respuesta4 = Respuesta_Agilidad.objects.get(id=id4)
-			respuesta4.idpregunta = pregunta
-			respuesta4.imagen = imagen4
-			respuesta4.determinacion = determinacion4
-			respuesta4.contenido = contenido4
-			respuesta4.no_secuencia = 4
-			respuesta4.tipo_imagen = tipo_imagen
-			respuesta4.save()
-
-
-			respuesta5 = Respuesta_Agilidad.objects.get(id=id5)
-			respuesta5.idpregunta = pregunta
-			respuesta5.imagen = imagen5
-			respuesta5.determinacion = determinacion5
-			respuesta5.contenido = contenido5
-			respuesta5.no_secuencia = 5
-			respuesta5.tipo_imagen = tipo_imagen
-			respuesta5.save()
-
-
-			respuesta6 = Respuesta_Agilidad.objects.get(id=id6)
-			respuesta6.idpregunta = pregunta
-			respuesta6.imagen = imagen6
-			respuesta6.determinacion = determinacion6
-			respuesta6.contenido = contenido6
-			respuesta6.no_secuencia = 6
-			respuesta6.tipo_imagen = tipo_imagen
-			respuesta6.save()
-			return HttpResponse('Respuesta guardada')
-		else:
-			if dados == 1:
-				#return render_to_response('agility/edit_answer_agility.html',locals(),context_instance=RequestContext(request))
-				return render_to_response('agility/edit_answer_agility_crafs.html',locals(),context_instance=RequestContext(request))
-			elif geometricas == 1:
-				return render_to_response('agility/edit_answer_agility_geometrics.html',locals(),context_instance=RequestContext(request))
-			elif objetos == 1:
-				return render_to_response('agility/edit_answer_agility_objects.html',locals(),context_instance=RequestContext(request))
-			return HttpResponse('a guardar')
 	else:
 		return HttpResponseRedirect('/')
 
+
 def delete_agilidad_pregunta_view(request,id_pregunta):
-	try:
-		pregunta = Pregunta.objects.get(id = id_pregunta)
-		pregunta.delete()
-	except Pregunta.DoesNotExist:
-		return HttpResponseRedirect("/")
-	return HttpResponseRedirect("/preguntas/agilidad/page/1/")
+	if request.user.is_authenticated():
+		try:
+			pregunta = Pregunta.objects.get(id = id_pregunta)
+			pregunta.delete()
+		except Pregunta.DoesNotExist:
+			return HttpResponseRedirect("/")
+		return HttpResponseRedirect("/preguntas/agilidad/page/1/")
+	else:
+		return HttpResponseRedirect('/')
+
+
+def question_success_agility_view(request):
+	if request.user.is_authenticated():
+		return render_to_response('agility/question_success_agility.html', locals(), context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/')

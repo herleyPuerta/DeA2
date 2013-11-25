@@ -3,8 +3,8 @@
 Preguntas de usario
 {% endblock titulo %}
 {% block contenido %}
-	<h3>Preguntas de {{usuario.username}}</h3>
 	{% if preguntas_teoricas %}
+	<h3>Preguntas del colegio {{usuario.username}}</h3>
 		<table  class="table table-bordered">
 			<thead>
 				<tr>
@@ -39,8 +39,12 @@ Preguntas de usario
 				</tbody>
 			{% endfor %}
 		</table>
+		<br><br><br>
+		<a class="btn btn-primary" href="{% url 'vistaAddPreguntaTeoria' %}">Ingresar pregunta de teoría</a><br><br><br>
 	{% else %}
-		<h2>aún no has registrado preguntas</h2>
+		<h4>El colgegio {{usuario.username}} aún no tiene preguntas</h4>
+		<br><br><br>
+		<a class="btn btn-primary" href="{% url 'vistaAddPreguntaTeoria' %}">Ingresar pregunta de teoría</a><br><br><br>
 	{% endif %}
 	{% if preguntas_teoricas %}
 		<a href="/preguntas/teoricas/page/1/"> << </a>

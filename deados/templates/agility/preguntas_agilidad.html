@@ -3,8 +3,8 @@
 Preguntas de usario
 {% endblock titulo %}
 {% block contenido %}
-	<h3>Preguntas de {{usuario.username}}</h3>
 	{% if preguntas_agilidad %}
+	<h3>Preguntas del colegio {{usuario.username}}</h3>
 		<table  class="table table-bordered">
 			<thead>
 				<tr>
@@ -24,7 +24,9 @@ Preguntas de usario
 			{% endfor %}
 		</table>
 	{% else %}
-		<h2>aún no has registrado preguntas de tipo agilidad mental</h2>
+		<h4>El colgegio {{usuario.username}} aún no tiene preguntas</h4>
+		<br><br><br>
+		<a class="btn btn-primary" href="{% url 'vistaNewQuestionAgility' %}">Ingresar pregunta de agilidad mental</a>
 	{% endif %}
 	{% if preguntas_agilidad %}
 		<a href="/preguntas/agilidad/page/1/"> << </a>

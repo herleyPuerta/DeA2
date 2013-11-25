@@ -5,6 +5,6 @@ Perfil de usuario
 {% block contenido %}
 <h3>Bienvenido usuario del colegio {{user.username}}!</h3><br><br>
 <p>Tu último inicio de sesión fue el {{user.last_login}}</br><br><br>
-<a class="btn btn-primary" href="{% url 'vistaAddPreguntaTeoria' %}">Ingresar pregunta de teoria</a><br><br><br>
-<a class="btn btn-primary" href="{% url 'vistaNewQuestionAgility' %}">Ingresar pregunta de agilidad</a>
+<a class="btn btn-primary" href="{% url 'vistaAddPreguntaTeoria' %}">Ingresar pregunta de teoría</a><br><br><br>
+<a class="btn btn-primary" href="{% url 'vistaNewQuestionAgility' %}">Ingresar pregunta de agilidad mental</a>
 {% endblock contenido %}

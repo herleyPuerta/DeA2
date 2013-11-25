@@ -7,7 +7,7 @@ Editar Respuesta de Agilidad Mental con imágenes geométricas
     <h3>Pregunta</h3>
     {{pregunta.contenido}}
     <div class="images_container_crafs">
-        <h4>Imagenes De Figuras Geométricas</h4>
+        <h4>Imágenes De Figuras Geométricas</h4>
         {% if  imagenes_geometricas %}
             {% for imagend in imagenes_geometricas %}
             <img src="/media/{{imagend.archivo}}" id="{{imagend.id}}" draggable="true" ondragstart="return empezar(event)" ondragend="return end(event)" width="60px" height="60px">
